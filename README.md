@@ -1,2 +1,2 @@
 # CSC-380
-Temporary repo for group project.
+Temporary repo for group project..
