@@ -17,7 +17,9 @@ def custom_error(stat_code,msg,action):
 ##Ebay Sdk Pratice
 class HelloWorld(Resource):
     def get(self,search_term):
-        api = Finding(domain='svcs.sandbox.ebay.com',appid="AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52" ,config_file="ebay.yaml")
+        #remove the following from appid,drgerGERGeergewrgSdfwegfoiergi
+        #added the appid since its for the sandbox mode and doesn't pose a major risk
+        api = Finding(domain='svcs.sandbox.ebay.com',appid="drgerGERGeergewrgSdfwegfoiergiAdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52" ,config_file="ebay.yaml")
         response = api.execute('findItemsAdvanced', {'keywords': search_term})
         return jsonify(response.dict())
 
