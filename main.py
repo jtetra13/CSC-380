@@ -1,6 +1,7 @@
 from flask import Flask, redirect, request, Response, jsonify, url_for
 from flask_restful import Resource, Api, reqparse
 from ebaysdk.finding import Connection as Finding
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -39,34 +40,25 @@ def generate_json_for_gui(response, max_query):
         parsed_dic[x] = {}
         parsed_dic[x]['parsed'] = listy
         parsed_dic[x]["title"] = response[x].get("title", None)
-        parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",
-                                                                                                               None)
-        parsed_dic[x]["totalPrice"] = response[x].get("shippingInfo", None).get("shippingServiceCost", None).get(
-            "value", None)
+        parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",None)
+        parsed_dic[x]["totalPrice"] = response[x].get("shippingInfo", None).get("shippingServiceCost", None).get("value", None)
+    with open("dummyJson.txt",'w') as dest:
+        json.dump(parsed_dic,dest)
     return jsonify(parsed_dic)
 
 
 #Ebay Sdk Pratice
 class EbayTesting(Resource):
     def get(self, search_term):
-        # this will be changed since we will get query from the gui,parse it from the endpoint
+        #this will be changed since we will get query from the gui,parse it from the endpoint
         # craft the custom api request , parse the response from ebay and pass the dict/json to gui
-        api = Finding(config_file=None, appid="AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52", domain='svcs.sandbox.ebay.com')
-##Ebay Sdk Pratice
-class HelloWorld(Resource):
-    def get(self,search_term):
         #remove the following from appid,drgerGERGeergewrgSdfwegfoiergi
         #added the appid since its for the sandbox mode and doesn't pose a major risk
-        api = Finding(domain='svcs.sandbox.ebay.com',appid="drgerGERGeergewrgSdfwegfoiergiAdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52" ,config_file="ebay.yaml")
-
+        api = Finding(domain='svcs.sandbox.ebay.com',appid="AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52" ,config_file="myebay.yaml")
         response = api.execute('findItemsAdvanced', {'keywords': search_term})
         response = response.dict()
         response = response["searchResult"]["item"]
         return generate_json_for_gui(response, 4)
-
-
-# this is our primary endpoint for the gui
-dic = {}
 
 
 class GuiQuery(Resource):
