@@ -18,10 +18,10 @@ api.ebay.com:
 
 # Finding API - https://www.x.com/developers/ebay/products/finding-api
 svcs.ebay.com:
-    appid:
+    appid: "AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52"
     version: 1.0.0
 
 # Shopping API - https://www.x.com/developers/ebay/products/shopping-api
 open.api.ebay.com:
-    appid: 
+    appid: AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52
     version: 671
