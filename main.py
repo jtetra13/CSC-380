@@ -19,6 +19,7 @@ def custom_error(stat_code, msg, action):
     return error_msg
 
 
+
 def generate_request_dict(key_words):
     # this will be to craft custom search query
     print("placeholder")
@@ -51,6 +52,13 @@ class EbayTesting(Resource):
         # this will be changed since we will get query from the gui,parse it from the endpoint
         # craft the custom api request , parse the response from ebay and pass the dict/json to gui
         api = Finding(config_file=None, appid="AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52", domain='svcs.sandbox.ebay.com')
+##Ebay Sdk Pratice
+class HelloWorld(Resource):
+    def get(self,search_term):
+        #remove the following from appid,drgerGERGeergewrgSdfwegfoiergi
+        #added the appid since its for the sandbox mode and doesn't pose a major risk
+        api = Finding(domain='svcs.sandbox.ebay.com',appid="drgerGERGeergewrgSdfwegfoiergiAdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52" ,config_file="ebay.yaml")
+
         response = api.execute('findItemsAdvanced', {'keywords': search_term})
         response = response.dict()
         response = response["searchResult"]["item"]
