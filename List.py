@@ -54,9 +54,10 @@ class List:
 			print('File does not exist, cannot delete item. \n')
 		
 #hardcode for testing
-example = {"itemId" : "102", "title" : "ball", "price" : {"price_no_shipping" : "7.50", "price_with_shipping" : "8.23"}, "country" : "America"}
-example2 = {"itemId" : "798", "title" : "basket", "price" : {"price_no_shipping" : "2.50", "price_with_shipping" : "5.32"}, "country" : "Japan"}
+#example = {"itemId" : "102", "title" : "ball", "price" : {"price_no_shipping" : "7.50", "price_with_shipping" : "8.23"}, "country" : "America"}
+#example2 = {"itemId" : "798", "title" : "basket", "price" : {"price_no_shipping" : "2.50", "price_with_shipping" : "5.32"}, "country" : "Japan"}
+
 #testing
-List.add(example)
-List.add(example2)
-List.delete("102")
+#List.add(example)
+#List.add(example2)
+#List.delete("102")
