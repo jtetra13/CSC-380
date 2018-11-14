@@ -1,3 +1,7 @@
+import List
+
+persity = List.List()
+
 class watchList:
     def __init__(self):
         # constructor for the class essentially
@@ -7,10 +11,12 @@ class watchList:
         if self.product_list is None:
             return {}
         else:
+            
             return self.product_list
 
     def add_item(self, item_dict):
         self.product_list[item_dict['itemId']] = item_dict
+        persity.add(item_dict)
         if item_dict['itemId'] in self.product_list:
             return True
         else:

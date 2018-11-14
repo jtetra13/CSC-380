@@ -1,7 +1,7 @@
 from flask import Flask, redirect, request, Response, jsonify, url_for
 from flask_restful import Resource, Api, reqparse
 from ebaysdk.finding import Connection as Finding
-import json, WatchList
+import WatchList
 
 app = Flask(__name__)
 api = Api(app)
@@ -31,7 +31,7 @@ def custom_error(stat_code, msg, action):
     return error_msg
 
 
-def gen_custom_search(user_param,):
+def gen_custom_search(user_param, ):
     # user_param will be a dict
     custom_search = {
 
@@ -40,12 +40,12 @@ def gen_custom_search(user_param,):
             'entriesPerPage': 50,
             'pageNumber': 1
         },
-        'sortOrderType':'BestMatch',
+        'sortOrderType': 'BestMatch',
         'itemFilter': {
-    'name': 'HideDuplicateItems',
-    'value': True},
-        'descriptionSearch':'True',
-}
+            'name': 'HideDuplicateItems',
+            'value': True},
+        'descriptionSearch': 'True',
+    }
     return custom_search
 
 
@@ -55,7 +55,7 @@ def parse_params_api_search():
     dikta['search_terms'] = ''.join(returned_args['search_param'])
     dikta['pages'] = dict(
         [('entries_per_page', returned_args['items_per_page']), ('page_number', returned_args['page_number'])])
-    dikta['advanced'] = None;  # reach goal for gui
+    dikta['advanced'] = None  # reach goal for gui
     return dikta
 
 
@@ -72,16 +72,23 @@ def parse_params_gui_query():
 def generate_json_for_gui(response, max_query, user_args):
     # the input will be the dict of the response from api
     # the examples are a translation to a dic
+    #this block parses the result,future fields added here
     parsed_dic = {}
     for x in range(max_query):
         parsed_dic[x] = {}
         parsed_dic[x]['user_args'] = user_args
         parsed_dic[x]["title"] = response[x].get("title", None)
-        parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",
-                                                                                                               None)
-        parsed_dic[x]["totalPrice"] = response[x].get("shippingInfo", None).get("shippingServiceCost", None).get(
-            "value", None)
+        parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",None)
+        parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
     return jsonify(parsed_dic)
+
+
+def check_if_resp_empty(response):
+    amount_of_products = response["searchResult"]["_count"]
+    if int(amount_of_products) > 0:
+        return response["searchResult"]['item'],int(amount_of_products)
+    else:
+        return custom_error(444, "No results found", "new_search"),0
 
 
 # Ebay Sdk Pratice
@@ -98,14 +105,14 @@ class EbayTesting(Resource):
         response = api.execute('findItemsAdvanced', custom_search)
         if response is None:
             return custom_error(400, "Couldn't connect to Ebay", "check your connection")
-        response = response.dict()
+        ebay_response = response.dict()
+        ebay_response,count = check_if_resp_empty(ebay_response)
 
+        if isinstance(ebay_response, Response):
+            return ebay_response
+        else:
 
-        response = response["searchResult"]["item"]
-#        return  response
-        with open('dummyJson.txt', 'w') as outy:
-            json.dump(response, outy)
-        return generate_json_for_gui(response, 5, user_param)  # custom_search does have the dict
+            return generate_json_for_gui(ebay_response,count, user_param)  # custom_search does have the dict
 
 
 dic = {"asdas": "ASfwregfef"}
@@ -116,14 +123,15 @@ class GuiQuery(Resource):
     def delete(self):
         parse_res = parse_params_gui_query()
         if watch_list.check_if_empty():
-            return custom_error(404,"the watchlist is empty. This action isnt legal","display_empty")
+            return custom_error(404, "the watchlist is empty. This action isnt legal", "display_empty")
         else:
             reznov = watch_list.delete_item(parse_res)
             if reznov is True:
                 return 200
-            elif reznov == 444: return custom_error(444,"Key doesn't exist","nothing")
-            else:return custom_error(reznov,"The action failed to delete the item","repeat_action")
-
+            elif reznov == 444:
+                return custom_error(444, "Key doesn't exist", "nothing")
+            else:
+                return custom_error(reznov, "The action failed to delete the item", "repeat_action")
 
     def put(self):
         parse_result = parse_params_gui_query()
