@@ -17,8 +17,8 @@ gui_parser.add_argument('country', required=True)
 gui_parser.add_argument('shipping', required=True)
 
 parser.add_argument('search_param', action='append', required=True)  # user string
-parser.add_argument('items_per_page', type=int, required=False)
-parser.add_argument('page_number', type=int, required=False)
+parser.add_argument('items_per_page', type=int, required=True)
+parser.add_argument('page_number', type=int, required=True)
 
 
 def custom_error(stat_code, msg, action):
@@ -31,27 +31,28 @@ def custom_error(stat_code, msg, action):
     return error_msg
 
 
-def gen_custom_search(user_param):
+def gen_custom_search(user_param,):
     # user_param will be a dict
     custom_search = {
 
-        'keywords': '(ball,harry)',
+        'keywords': user_param['search_terms'],
         'paginationInput': {
             'entriesPerPage': 50,
-            'pageNumber': 2
+            'pageNumber': 1
         },
+        'sortOrderType':'BestMatch',
         'itemFilter': {
-            "name": "FreeShippingOnly",
-            "value": "true"
-        }
-    }
+    'name': 'HideDuplicateItems',
+    'value': True},
+        'descriptionSearch':'True',
+}
     return custom_search
 
 
 def parse_params_api_search():
     dikta = dict()
     returned_args = parser.parse_args()
-    dikta['search_terms'] = (dict(enumerate(returned_args['search_param'])))
+    dikta['search_terms'] = ''.join(returned_args['search_param'])
     dikta['pages'] = dict(
         [('entries_per_page', returned_args['items_per_page']), ('page_number', returned_args['page_number'])])
     dikta['advanced'] = None;  # reach goal for gui
@@ -85,10 +86,11 @@ def generate_json_for_gui(response, max_query, user_args):
 
 # Ebay Sdk Pratice
 class EbayTesting(Resource):
-    def get(self, search_term):
+    def get(self):
         # this will be changed since we will get query from the gui,parse it from the endpoint
         # craft the custom api request , parse the response from ebay and pass the dict/json to gui
         # added the appid since its for the sandbox mode and doesn't pose a major risk
+
         api = Finding(domain='svcs.sandbox.ebay.com', appid="AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52",
                       config_file="myebay.yaml")
         user_param = parse_params_api_search()
@@ -97,10 +99,13 @@ class EbayTesting(Resource):
         if response is None:
             return custom_error(400, "Couldn't connect to Ebay", "check your connection")
         response = response.dict()
+
+
         response = response["searchResult"]["item"]
+#        return  response
         with open('dummyJson.txt', 'w') as outy:
             json.dump(response, outy)
-        return generate_json_for_gui(response, 20, user_param)  # custom_search does have the dict
+        return generate_json_for_gui(response, 5, user_param)  # custom_search does have the dict
 
 
 dic = {"asdas": "ASfwregfef"}
@@ -108,7 +113,7 @@ dic = {"asdas": "ASfwregfef"}
 
 class GuiQuery(Resource):
     # remove the requested objected
-    def delete(self, name):
+    def delete(self):
         parse_res = parse_params_gui_query()
         if watch_list.check_if_empty():
             return custom_error(404,"the watchlist is empty. This action isnt legal","display_empty")
@@ -120,19 +125,19 @@ class GuiQuery(Resource):
             else:return custom_error(reznov,"The action failed to delete the item","repeat_action")
 
 
-    def put(self, name):
+    def put(self):
         parse_result = parse_params_gui_query()
         watch_list.add_item(parse_result)
         return 200
 
-    def get(self, name):
+    def get(self):
         # get the requested element
         if watch_list.check_if_empty():
             return custom_error(404, "the dic is empty", "display_empty")
         return watch_list.dump_list()
 
 
-api.add_resource(EbayTesting, '/<string:search_term>')
-api.add_resource(GuiQuery, '/order66/<string:name>')
+api.add_resource(EbayTesting, '/search')
+api.add_resource(GuiQuery, '/order66')
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
