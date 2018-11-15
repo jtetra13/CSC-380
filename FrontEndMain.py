@@ -1,9 +1,7 @@
 from tkinter import *
-import tkinter as tk
 import webbrowser
 import requests
 from time import sleep
-
 
 def callback(event):
     webbrowser.open_new(r"https://www.ebay.com/help/home")
@@ -328,8 +326,6 @@ class Page4(Page):
        box6 = Checkbutton(canvas, text="Search list", variable=var1)
        canvas.create_window(320, 1330, window=box6)
 
-       #r = requests.get("http://127.0.0.1:5000/search?search_param=ball&items_per_page=2&page_number=3%22")
-       #print(r)
 
        #Next Page button
        nextPage = Button(canvas, text="Next Page")
@@ -339,6 +335,12 @@ class Page4(Page):
        scrollbar.pack(side=RIGHT, fill=Y, expand=False)
        scrollbar.config(command=canvas.yview)
        canvas.config(yscrollcommand = scrollbar.set)
+
+       try:
+           r = requests.get("http://127.0.0.1:5000/search?search_param=ball&items_per_page=2&page_number=3")
+           print(r.json())
+       except requests.exceptions.ConnectionError:
+           print("Connection refused")
 
 class MainView(Frame):
     def __init__(self, *args, **kwargs):
@@ -373,6 +375,7 @@ class MainView(Frame):
         p4.show()
 
         b3.bind("<Button-1>", callback)
+
 
 if __name__ == "__main__":
     root = Tk()
