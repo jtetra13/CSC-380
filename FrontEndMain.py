@@ -1,6 +1,8 @@
 from tkinter import *
 import tkinter as tk
 import webbrowser
+import requests
+from time import sleep
 
 
 def callback(event):
@@ -12,22 +14,8 @@ class Page(Frame):
     def show(self):
         self.lift()
 
+
 class Page1(Page):
-   def __init__(self, *args, **kwargs):
-       Page.__init__(self, *args, **kwargs)
-       def search(self):
-           subprocess.call([""], shell=True)
-
-       searchButton = Button(self, text="Search", command=search)
-       searchButton.place(relx=.5, rely=.55, anchor="center")
-
-       label = Label(self, text="Hadrian's Search")
-       label.place(relx=.5, rely=.45, anchor="center")
-       search1 = StringVar()
-       mEntry = Entry(self, width=30,textvariable=search1)
-       mEntry.place(relx=.5, rely=.5, anchor="center")
-
-class Page2(Page):
    def __init__(self, *args, **kwargs):
        Page.__init__(self, *args, **kwargs)
        #Top box, Goes Top,Bottom,left,right line
@@ -37,55 +25,43 @@ class Page2(Page):
        canvas.create_line(50, 250, 50, 50)
        canvas.create_line(1300, 50, 1300, 250)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 60, 260, 60)
-       canvas.create_line(60, 240, 260, 240)
-       canvas.create_line(60, 240, 60, 60)
-       canvas.create_line(260, 60, 260, 240)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 60, 260, 240, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 450, 1300, 450)
        canvas.create_line(50, 450, 50, 250)
        canvas.create_line(1300, 450, 1300, 250)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 260, 260, 260)
-       canvas.create_line(60, 440, 260, 440)
-       canvas.create_line(60, 260, 60, 440)
-       canvas.create_line(260, 260, 260, 440)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 260, 260, 440, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 650, 1300, 650)
        canvas.create_line(50, 650, 50, 450)
        canvas.create_line(1300, 650, 1300, 450)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 460, 260, 460)
-       canvas.create_line(60, 640, 260, 640)
-       canvas.create_line(60, 460, 60, 640)
-       canvas.create_line(260, 460, 260, 640)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 460, 260, 640, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 850, 1300, 850)
        canvas.create_line(50, 850, 50, 650)
        canvas.create_line(1300, 850, 1300, 650)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 660, 260, 660)
-       canvas.create_line(60, 840, 260, 840)
-       canvas.create_line(60, 660, 60, 840)
-       canvas.create_line(260, 660, 260, 840)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 660, 260, 840, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 1050, 1300, 1050)
        canvas.create_line(50, 1050, 50, 850)
        canvas.create_line(1300, 1050, 1300, 850)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 860, 260, 860)
-       canvas.create_line(60, 1040, 260, 1040)
-       canvas.create_line(60, 860, 60, 1040)
-       canvas.create_line(260, 860, 260, 1040)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 860, 260, 1040, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 1250, 1300, 1250)
        canvas.create_line(50, 1250, 50, 850)
        canvas.create_line(1300, 1250, 1300, 1050)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 1060, 260, 1060)
-       canvas.create_line(60, 1240, 260, 1240)
-       canvas.create_line(60, 1060, 60, 1240)
-       canvas.create_line(260, 1060, 260, 1240)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 1060, 260, 1240, fill="blue", outline = 'black')
 
        canvas.place(relx=.5, rely=.5, anchor="center")
        label = Label(self, text="Watchlist")
@@ -139,7 +115,7 @@ class Page2(Page):
        scrollbar.config(command=canvas.yview)
        canvas.config(yscrollcommand = scrollbar.set)
 
-class Page3(Page):
+class Page2(Page):
    def __init__(self, *args, **kwargs):
        Page.__init__(self, *args, **kwargs)
        #Top box, Goes Top,Bottom,left,right line
@@ -149,55 +125,43 @@ class Page3(Page):
        canvas.create_line(50, 250, 50, 50)
        canvas.create_line(1300, 50, 1300, 250)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 60, 260, 60)
-       canvas.create_line(60, 240, 260, 240)
-       canvas.create_line(60, 240, 60, 60)
-       canvas.create_line(260, 60, 260, 240)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 60, 260, 240, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 450, 1300, 450)
        canvas.create_line(50, 450, 50, 250)
        canvas.create_line(1300, 450, 1300, 250)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 260, 260, 260)
-       canvas.create_line(60, 440, 260, 440)
-       canvas.create_line(60, 260, 60, 440)
-       canvas.create_line(260, 260, 260, 440)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 260, 260, 440, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 650, 1300, 650)
        canvas.create_line(50, 650, 50, 450)
        canvas.create_line(1300, 650, 1300, 450)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 460, 260, 460)
-       canvas.create_line(60, 640, 260, 640)
-       canvas.create_line(60, 460, 60, 640)
-       canvas.create_line(260, 460, 260, 640)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 460, 260, 640, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 850, 1300, 850)
        canvas.create_line(50, 850, 50, 650)
        canvas.create_line(1300, 850, 1300, 650)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 660, 260, 660)
-       canvas.create_line(60, 840, 260, 840)
-       canvas.create_line(60, 660, 60, 840)
-       canvas.create_line(260, 660, 260, 840)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 660, 260, 840, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 1050, 1300, 1050)
        canvas.create_line(50, 1050, 50, 850)
        canvas.create_line(1300, 1050, 1300, 850)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 860, 260, 860)
-       canvas.create_line(60, 1040, 260, 1040)
-       canvas.create_line(60, 860, 60, 1040)
-       canvas.create_line(260, 860, 260, 1040)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 860, 260, 1040, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 1250, 1300, 1250)
        canvas.create_line(50, 1250, 50, 850)
        canvas.create_line(1300, 1250, 1300, 1050)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 1060, 260, 1060)
-       canvas.create_line(60, 1240, 260, 1240)
-       canvas.create_line(60, 1060, 60, 1240)
-       canvas.create_line(260, 1060, 260, 1240)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 1060, 260, 1240, fill="blue", outline = 'black')
 
        canvas.place(relx=.5, rely=.5, anchor="center")
        label = Label(self, text="Ignore List")
@@ -251,7 +215,7 @@ class Page3(Page):
        scrollbar.config(command=canvas.yview)
        canvas.config(yscrollcommand = scrollbar.set)
 
-class Page4(Page):
+class Page3(Page):
    def __init__(self, *args, **kwargs):
        Page.__init__(self, *args, **kwargs)
        label = Label(self, text="About")
@@ -260,112 +224,116 @@ class Page4(Page):
        T2.place(relx=.5, rely=.5, anchor="center")
        T2.insert(END, "This is the About page where a brief explanation\n of everyone who has worked on this project and\n what they did will be explained.")
 
-class Page5(Page):
+class Page4(Page):
    def __init__(self, *args, **kwargs):
        Page.__init__(self, *args, **kwargs)
-       #Top box, Goes Top,Bottom,left,right line
-       canvas = Canvas(self, height = root.winfo_screenheight(),width = root.winfo_screenwidth(), scrollregion=(0, 0, 1400, 1400))
-       canvas.create_line(50, 50, 1300, 50)
-       canvas.create_line(50, 250, 1300, 250)
-       canvas.create_line(50, 250, 50, 50)
-       canvas.create_line(1300, 50, 1300, 250)
-       #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 60, 260, 60)
-       canvas.create_line(60, 240, 260, 240)
-       canvas.create_line(60, 240, 60, 60)
-       canvas.create_line(260, 60, 260, 240)
+       canvas = Canvas(self, height = root.winfo_screenheight(),width = root.winfo_screenwidth(), scrollregion=(0, 0, 1700, 1700))
+       def search():
+           sleep(1) # Need this to slow the changes down
+           item.set(mEntry.get())
+           root.update_idletasks()
+
+       lbl = StringVar()
+       label = Label(self, text="Hadrian's Search")
+       canvas.create_window(700, 50, window=label)
+       search1 = StringVar()
+       mEntry = Entry(self, width=30,textvariable=search1)
+       canvas.create_window(700, 100, window=mEntry)
+       searchButton = Button(self, text="Search", command=search)
+       canvas.create_window(700, 150, window=searchButton)
        #Mid box, Goes Bottom,left,right line
+       canvas.create_line(50, 250, 1300, 250)
        canvas.create_line(50, 450, 1300, 450)
        canvas.create_line(50, 450, 50, 250)
        canvas.create_line(1300, 450, 1300, 250)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 260, 260, 260)
-       canvas.create_line(60, 440, 260, 440)
-       canvas.create_line(60, 260, 60, 440)
-       canvas.create_line(260, 260, 260, 440)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 260, 260, 440, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 650, 1300, 650)
        canvas.create_line(50, 650, 50, 450)
        canvas.create_line(1300, 650, 1300, 450)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 460, 260, 460)
-       canvas.create_line(60, 640, 260, 640)
-       canvas.create_line(60, 460, 60, 640)
-       canvas.create_line(260, 460, 260, 640)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 460, 260, 640, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 850, 1300, 850)
        canvas.create_line(50, 850, 50, 650)
        canvas.create_line(1300, 850, 1300, 650)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 660, 260, 660)
-       canvas.create_line(60, 840, 260, 840)
-       canvas.create_line(60, 660, 60, 840)
-       canvas.create_line(260, 660, 260, 840)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 660, 260, 840, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 1050, 1300, 1050)
        canvas.create_line(50, 1050, 50, 850)
        canvas.create_line(1300, 1050, 1300, 850)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 860, 260, 860)
-       canvas.create_line(60, 1040, 260, 1040)
-       canvas.create_line(60, 860, 60, 1040)
-       canvas.create_line(260, 860, 260, 1040)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 860, 260, 1040, fill="blue", outline = 'black')
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 1250, 1300, 1250)
        canvas.create_line(50, 1250, 50, 850)
        canvas.create_line(1300, 1250, 1300, 1050)
        #Little Box Goes Top,Bottom,left,right line
-       canvas.create_line(60, 1060, 260, 1060)
-       canvas.create_line(60, 1240, 260, 1240)
-       canvas.create_line(60, 1060, 60, 1240)
-       canvas.create_line(260, 1060, 260, 1240)
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 1060, 260, 1240, fill="blue", outline = 'black')
+       canvas.create_line(50, 1450, 1300, 1450)
+       canvas.create_line(50, 1450, 50, 1050)
+       canvas.create_line(1300, 1450, 1300, 1250)
+       #Little Box Goes Top,Bottom,left,right line
+       #Need to replace rectangle with create_image
+       canvas.create_rectangle(60, 1260, 260, 1440, fill="blue", outline = 'black')
+
 
        canvas.place(relx=.5, rely=.5, anchor="center")
-       label = Label(self, text="Search List")
-       label.place(relx=.5, rely=.00)
        #Item Names
-       itemName1= Label(canvas, text="Item Name Here")
-       canvas.create_window(320, 70, window=itemName1)
+       item = StringVar()
+       itemName1= Label(canvas, text="Item Name Here",textvariable= item)
+       canvas.create_window(320, 270, window=itemName1)
        itemName2= Label(canvas, text="Item Name Here")
-       canvas.create_window(320, 270, window=itemName2)
+       canvas.create_window(320, 470, window=itemName2)
        itemName3= Label(canvas, text="Item Name Here")
-       canvas.create_window(320, 470, window=itemName3)
+       canvas.create_window(320, 670, window=itemName3)
        itemName4= Label(canvas, text="Item Name Here")
-       canvas.create_window(320, 670, window=itemName4)
+       canvas.create_window(320, 870, window=itemName4)
        itemName5= Label(canvas, text="Item Name Here")
-       canvas.create_window(320, 870, window=itemName5)
+       canvas.create_window(320, 1070, window=itemName5)
        itemName6= Label(canvas, text="Item Name Here")
-       canvas.create_window(320, 1070, window=itemName6)
+       canvas.create_window(320, 1270, window=itemName6)
        #Price
        price1= Label(canvas, text="Price Here")
-       canvas.create_window(320, 100, window=price1)
+       canvas.create_window(320, 300, window=price1)
        price2= Label(canvas, text="Price Here")
-       canvas.create_window(320, 300, window=price2)
+       canvas.create_window(320, 500, window=price2)
        price3= Label(canvas, text="Price Here")
-       canvas.create_window(320, 500, window=price3)
+       canvas.create_window(320, 700, window=price3)
        price4= Label(canvas, text="Price Here")
-       canvas.create_window(320, 700, window=price4)
+       canvas.create_window(320, 900, window=price4)
        price5= Label(canvas, text="Price Here")
-       canvas.create_window(320, 900, window=price5)
+       canvas.create_window(320, 1100, window=price5)
        price6= Label(canvas, text="Price Here")
-       canvas.create_window(320, 1100, window=price6)
+       canvas.create_window(320, 1300, window=price6)
        #List Check box
        var1 = StringVar()
        box1 = Checkbutton(canvas, text="Search list", variable=var1)
-       canvas.create_window(320, 130, window=box1)
+       canvas.create_window(320, 330, window=box1)
        box2 = Checkbutton(canvas, text="Search list", variable=var1)
-       canvas.create_window(320, 330, window=box2)
+       canvas.create_window(320, 530, window=box2)
        box3 = Checkbutton(canvas, text="Search list", variable=var1)
-       canvas.create_window(320, 530, window=box3)
+       canvas.create_window(320, 730, window=box3)
        box4 = Checkbutton(canvas, text="Search list", variable=var1)
-       canvas.create_window(320, 730, window=box4)
+       canvas.create_window(320, 930, window=box4)
        box5 = Checkbutton(canvas, text="Search list", variable=var1)
-       canvas.create_window(320, 930, window=box5)
+       canvas.create_window(320, 1130, window=box5)
        box6 = Checkbutton(canvas, text="Search list", variable=var1)
-       canvas.create_window(320, 1130, window=box6)
+       canvas.create_window(320, 1330, window=box6)
+
+       #r = requests.get("http://127.0.0.1:5000/search?search_param=ball&items_per_page=2&page_number=3%22")
+       #print(r)
+
        #Next Page button
        nextPage = Button(canvas, text="Next Page")
-       canvas.create_window(700, 1300, window=nextPage)
+       canvas.create_window(700, 1500, window=nextPage)
        #Scroll bar
        scrollbar = Scrollbar(self)
        scrollbar.pack(side=RIGHT, fill=Y, expand=False)
@@ -379,7 +347,6 @@ class MainView(Frame):
         p2 = Page2(self)
         p3 = Page3(self)
         p4 = Page4(self)
-        p5 = Page5(self)
 
         buttonframe = Frame(self)
         container = Frame(self)
@@ -390,25 +357,22 @@ class MainView(Frame):
         p2.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         p3.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         p4.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-        p5.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
-        b1 = Button(buttonframe, text="New Search", command=p1.lift)
-        b2 = Button(buttonframe, text="Watchlist", command=p2.lift)
-        b3 = Button(buttonframe, text="Ignore List", command=p3.lift)
-        b4 = Button(buttonframe, text="Help")
-        b5 = Button(buttonframe, text="About", command=p4.lift)
-        b6 = Button(buttonframe, text="Search List", command=p5.lift)
+        b1 = Button(buttonframe, text="Watchlist", command=p1.lift)
+        b2 = Button(buttonframe, text="Ignore List", command=p2.lift)
+        b3 = Button(buttonframe, text="Help")
+        b4 = Button(buttonframe, text="About", command=p3.lift)
+        b5 = Button(buttonframe, text="Search List", command=p4.lift)
 
         b1.grid(row=0, column=0)
         b2.grid(row=0, column=4)
         b3.grid(row=0, column=5)
         b4.grid(row=0, column=6)
         b5.grid(row=0, column=7)
-        b6.grid(row=0, column=9)
 
-        p1.show()
+        p4.show()
 
-        b4.bind("<Button-1>", callback)
+        b3.bind("<Button-1>", callback)
 
 if __name__ == "__main__":
     root = Tk()
