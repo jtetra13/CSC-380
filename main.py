@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, Response, jsonify, url_for
+from flask import Flask, redirect, request, Response, jsonify, url_for,render_template
 from flask_restful import Resource, Api, reqparse
 from ebaysdk.finding import Connection as Finding
 import WatchList
@@ -37,8 +37,8 @@ def gen_custom_search(user_param, ):
 
         'keywords': user_param['search_terms'],
         'paginationInput': {
-            'entriesPerPage': 50,
-            'pageNumber': 1
+            'entriesPerPage': user_param['pages']['entries_per_page'],
+            'pageNumber': user_param['pages']['page_number']
         },
         'sortOrderType': 'BestMatch',
         'itemFilter': {
@@ -77,6 +77,7 @@ def generate_json_for_gui(response, max_query, user_args):
     for x in range(max_query):
         parsed_dic[x] = {}
         parsed_dic[x]['user_args'] = user_args
+        parsed_dic[x]['itemId'] = response[x].get("itemId",None)
         parsed_dic[x]["title"] = response[x].get("title", None)
         parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",None)
         parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
@@ -114,10 +115,6 @@ class EbayTesting(Resource):
 
             return generate_json_for_gui(ebay_response,count, user_param)  # custom_search does have the dict
 
-
-dic = {"asdas": "ASfwregfef"}
-
-
 class GuiQuery(Resource):
     # remove the requested objected
     def delete(self):
@@ -144,8 +141,7 @@ class GuiQuery(Resource):
             return custom_error(404, "the dic is empty", "display_empty")
         return watch_list.dump_list()
 
-
-api.add_resource(EbayTesting, '/search')
-api.add_resource(GuiQuery, '/order66')
+api.add_resource(EbayTesting, '/search')# this is for the watchlists
+api.add_resource(GuiQuery, '/order66') # this is for the query
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
