@@ -311,21 +311,33 @@ class Page4(Page):
        canvas.create_window(320, 1100, window=price5)
        price6= Label(canvas, text="Price Here")
        canvas.create_window(320, 1300, window=price6)
-       #List Check box
-       var1 = StringVar()
-       box1 = Checkbutton(canvas, text="Search list", variable=var1)
+       #WatchList Check box
+       #var1 = StringVar()
+       box1 = Checkbutton(canvas, text="Watch list")
        canvas.create_window(320, 330, window=box1)
-       box2 = Checkbutton(canvas, text="Search list", variable=var1)
+       box2 = Checkbutton(canvas, text="Watch list")
        canvas.create_window(320, 530, window=box2)
-       box3 = Checkbutton(canvas, text="Search list", variable=var1)
+       box3 = Checkbutton(canvas, text="Watch list")
        canvas.create_window(320, 730, window=box3)
-       box4 = Checkbutton(canvas, text="Search list", variable=var1)
+       box4 = Checkbutton(canvas, text="Watch list")
        canvas.create_window(320, 930, window=box4)
-       box5 = Checkbutton(canvas, text="Search list", variable=var1)
+       box5 = Checkbutton(canvas, text="Watch list")
        canvas.create_window(320, 1130, window=box5)
-       box6 = Checkbutton(canvas, text="Search list", variable=var1)
+       box6 = Checkbutton(canvas, text="Watch list")
        canvas.create_window(320, 1330, window=box6)
-
+       #Ignore list check box
+       box7 = Checkbutton(canvas, text="Ignore list")
+       canvas.create_window(320, 350, window=box7)
+       box8 = Checkbutton(canvas, text="Ignore list")
+       canvas.create_window(320, 550, window=box8)
+       box9 = Checkbutton(canvas, text="Ignore list")
+       canvas.create_window(320, 750, window=box9)
+       box10 = Checkbutton(canvas, text="Ignore list")
+       canvas.create_window(320, 950, window=box10)
+       box11 = Checkbutton(canvas, text="Ignore list")
+       canvas.create_window(320, 1150, window=box11)
+       box12 = Checkbutton(canvas, text="Ignore list")
+       canvas.create_window(320, 1350, window=box12)
 
        #Next Page button
        nextPage = Button(canvas, text="Next Page")
@@ -337,7 +349,7 @@ class Page4(Page):
        canvas.config(yscrollcommand = scrollbar.set)
 
        try:
-           r = requests.get("http://127.0.0.1:5000/search?search_param=ball&items_per_page=2&page_number=3")
+           r = requests.get("http://127.0.0.1:5000/search?search_param=ball&items_per_page=50&page_number=1")
            print(r.json())
        except requests.exceptions.ConnectionError:
            print("Connection refused")
