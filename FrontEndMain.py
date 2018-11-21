@@ -1,10 +1,17 @@
 from tkinter import *
 import webbrowser
 import requests
+import json
 from time import sleep
 
 def callback(event):
     webbrowser.open_new(r"https://www.ebay.com/help/home")
+
+def search():
+    sleep(1) # Need this to slow the changes down
+    global item
+    item = mEntry.get()
+    root.update_idletasks()
 
 class Page(Frame):
     def __init__(self, *args, **kwargs):
@@ -221,24 +228,51 @@ class Page3(Page):
        T2 = Text(self, height=3, width=50)
        T2.place(relx=.5, rely=.5, anchor="center")
        T2.insert(END, "This is the About page where a brief explanation\n of everyone who has worked on this project and\n what they did will be explained.")
-
+pageNum = 0
 class Page4(Page):
    def __init__(self, *args, **kwargs):
        Page.__init__(self, *args, **kwargs)
        canvas = Canvas(self, height = root.winfo_screenheight(),width = root.winfo_screenwidth(), scrollregion=(0, 0, 1700, 1700))
+       pageNum=0
        def search():
            sleep(1) # Need this to slow the changes down
-           item.set(mEntry.get())
+           global pageNum
+           pageNum=pageNum+1
+           item = mEntry.get()
            root.update_idletasks()
+           try:
+               json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=6&page_number="+str(pageNum)).json()
+               print(json_data)
+               firstPrice = json_data['0']['price']
+               firstTitle = json_data['0']['title']
+               priceOfFirst.set(firstPrice)
+               titleOfFirst.set(firstTitle)
+               secondPrice = json_data['1']['price']
+               secondTitle = json_data['1']['title']
+               priceOfSecond.set(secondPrice)
+               titleOfSecond.set(secondTitle)
+               thirdPrice = json_data['2']['price']
+               thirdTitle = json_data['2']['title']
+               priceOfThird.set(thirdPrice)
+               titleOfThird.set(thirdTitle)
+               fourthPrice = json_data['3']['price']
+               fourthTitle = json_data['3']['title']
+               priceOfFourth.set(fourthPrice)
+               titleOfFourth.set(fourthTitle)
+               fifthPrice = json_data['4']['price']
+               fifthTitle = json_data['4']['title']
+               priceOfFifth.set(fifthPrice)
+               titleOfFifth.set(fifthTitle)
+               sixthPrice = json_data['5']['price']
+               sixthTitle = json_data['5']['title']
+               priceOfSixth.set(sixthPrice)
+               titleOfSixth.set(sixthTitle)
+           except requests.exceptions.ConnectionError:
+               print("Connection refused")
 
        lbl = StringVar()
        label = Label(self, text="Hadrian's Search")
        canvas.create_window(700, 50, window=label)
-       search1 = StringVar()
-       mEntry = Entry(self, width=30,textvariable=search1)
-       canvas.create_window(700, 100, window=mEntry)
-       searchButton = Button(self, text="Search", command=search)
-       canvas.create_window(700, 150, window=searchButton)
        #Mid box, Goes Bottom,left,right line
        canvas.create_line(50, 250, 1300, 250)
        canvas.create_line(50, 450, 1300, 450)
@@ -285,31 +319,42 @@ class Page4(Page):
 
        canvas.place(relx=.5, rely=.5, anchor="center")
        #Item Names
-       item = StringVar()
-       itemName1= Label(canvas, text="Item Name Here",textvariable= item)
+       titleOfFirst=StringVar()
+       titleOfSecond=StringVar()
+       titleOfThird=StringVar()
+       titleOfFourth=StringVar()
+       titleOfFifth=StringVar()
+       titleOfSixth=StringVar()
+       itemName1= Label(canvas, text="Item Name Here", textvariable=titleOfFirst)
        canvas.create_window(320, 270, window=itemName1)
-       itemName2= Label(canvas, text="Item Name Here")
+       itemName2= Label(canvas, text="Item Name Here", textvariable=titleOfSecond)
        canvas.create_window(320, 470, window=itemName2)
-       itemName3= Label(canvas, text="Item Name Here")
+       itemName3= Label(canvas, text="Item Name Here", textvariable=titleOfThird)
        canvas.create_window(320, 670, window=itemName3)
-       itemName4= Label(canvas, text="Item Name Here")
+       itemName4= Label(canvas, text="Item Name Here", textvariable=titleOfFourth)
        canvas.create_window(320, 870, window=itemName4)
-       itemName5= Label(canvas, text="Item Name Here")
+       itemName5= Label(canvas, text="Item Name Here", textvariable=titleOfFifth)
        canvas.create_window(320, 1070, window=itemName5)
-       itemName6= Label(canvas, text="Item Name Here")
+       itemName6= Label(canvas, text="Item Name Here", textvariable=titleOfSixth)
        canvas.create_window(320, 1270, window=itemName6)
        #Price
-       price1= Label(canvas, text="Price Here")
+       priceOfFirst=StringVar()
+       priceOfSecond=StringVar()
+       priceOfThird=StringVar()
+       priceOfFourth=StringVar()
+       priceOfFifth=StringVar()
+       priceOfSixth=StringVar()
+       price1= Label(canvas, text="Price Here", textvariable=priceOfFirst)
        canvas.create_window(320, 300, window=price1)
-       price2= Label(canvas, text="Price Here")
+       price2= Label(canvas, text="Price Here", textvariable=priceOfSecond)
        canvas.create_window(320, 500, window=price2)
-       price3= Label(canvas, text="Price Here")
+       price3= Label(canvas, text="Price Here", textvariable=priceOfThird)
        canvas.create_window(320, 700, window=price3)
-       price4= Label(canvas, text="Price Here")
+       price4= Label(canvas, text="Price Here", textvariable=priceOfFourth)
        canvas.create_window(320, 900, window=price4)
-       price5= Label(canvas, text="Price Here")
+       price5= Label(canvas, text="Price Here", textvariable=priceOfFifth)
        canvas.create_window(320, 1100, window=price5)
-       price6= Label(canvas, text="Price Here")
+       price6= Label(canvas, text="Price Here", textvariable=priceOfSixth)
        canvas.create_window(320, 1300, window=price6)
        #WatchList Check box
        #var1 = StringVar()
@@ -338,21 +383,21 @@ class Page4(Page):
        canvas.create_window(320, 1150, window=box11)
        box12 = Checkbutton(canvas, text="Ignore list")
        canvas.create_window(320, 1350, window=box12)
+       #Search bar
+       search1 = StringVar()
+       mEntry = Entry(self, width=30, textvariable=search1)
+       canvas.create_window(700, 100, window=mEntry)
+       searchButton = Button(self, text="Search", command=search)
+       canvas.create_window(700, 150, window=searchButton)
 
        #Next Page button
-       nextPage = Button(canvas, text="Next Page")
+       nextPage = Button(canvas, text="Next Page", command=search)
        canvas.create_window(700, 1500, window=nextPage)
        #Scroll bar
        scrollbar = Scrollbar(self)
        scrollbar.pack(side=RIGHT, fill=Y, expand=False)
        scrollbar.config(command=canvas.yview)
        canvas.config(yscrollcommand = scrollbar.set)
-
-       try:
-           r = requests.get("http://127.0.0.1:5000/search?search_param=ball&items_per_page=50&page_number=1")
-           print(r.json())
-       except requests.exceptions.ConnectionError:
-           print("Connection refused")
 
 class MainView(Frame):
     def __init__(self, *args, **kwargs):
