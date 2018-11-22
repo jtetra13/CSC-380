@@ -8,6 +8,16 @@
 <div id="results"></div>
 
 <script>
+from ebaysdk.http import Connection as HTTP
+
+try:
+    api = HTTP()
+    response = api.execute('http://127.0.0.1/computers?search_params=A')
+    print(response.dict())
+except ConnectionError as e:
+    print(e)
+    print(e.response.content)
+
 // Parse the response and build an HTML table to display search results
 function _cb_findItemsByKeywords(root) {
 var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
@@ -28,7 +38,7 @@ var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
 }  // End _cb_findItemsByKeywords() function
 // Construct the request
 // Replace MyAppID with your Production AppID
-var url = "http://svcs.ebay.com/services/search/FindingService/v1";
+var url = "http://svcs.sandbox.ebay.com/services/search/FindingService/v1";
     url += "?OPERATION-NAME=findItemsByKeywords";
     url += "&SERVICE-VERSION=1.0.0";
     url += "&SECURITY-APPNAME=AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52";
@@ -41,6 +51,7 @@ var url = "http://svcs.ebay.com/services/search/FindingService/v1";
 // Submit the request
 s=document.createElement('script'); // create script element
 s.src= url;
+println(s);
 document.body.appendChild(s);
 </script>
 
