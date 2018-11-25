@@ -1,6 +1,3 @@
-import flask
-import flask_restful
-import ebaysdk
 import json
 import fileinput
 
@@ -26,8 +23,11 @@ import fileinput
 # price_with_shipping,3.40
 # country,Japan
 
-class List:
-    def add(input_dict):
+class LocalFile:
+    def init_file(self):
+        f = open('watch_list.txt', 'a+')
+        f.close()
+    def add(self,input_dict):
         f = open('watch_list.txt', 'a+')
 
         index = 5
@@ -43,7 +43,7 @@ class List:
                     f.write(key + ',' + input_dict[key] + '\n')
         f.close()
 
-    def delete(itemId):
+    def delete(self,itemId):
         try:
             f = fileinput.input('watch_list.txt', inplace=True)
 
@@ -57,7 +57,7 @@ class List:
         except IOError as e:
             print('File does not exist, cannot delete item. \n')
 
-    def print_dict():
+    def dump_dict(self):
         try:
             f = fileinput.input('watch_list.txt')
             inner_param_dict_name = 'price'
@@ -75,7 +75,10 @@ class List:
                     list_input = line.strip().split(',')
                     watch_list['item' + str(counter)][list_input[0]] = list_input[1]
             f.close()
-            print(watch_list)
+            if watch_list is False:
+                return False
+            else:
+                return watch_list
 
         except IOError as e:
             print('File does not exist, no items in the watchlist. \n')
@@ -89,4 +92,4 @@ class List:
 # List.add(example)
 # List.add(example2)
 # List.delete("102")
-# List.print_dict()
+# List.dump_dict()

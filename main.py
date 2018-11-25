@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, Response, jsonify, url_for,render_template
+from flask import Flask, redirect, request, Response, jsonify, url_for, render_template
 from flask_restful import Resource, Api, reqparse
 from ebaysdk.finding import Connection as Finding
 import WatchList
@@ -72,14 +72,16 @@ def parse_params_gui_query():
 def generate_json_for_gui(response, max_query, user_args):
     # the input will be the dict of the response from api
     # the examples are a translation to a dic
-    #this block parses the result,future fields added here
+    # this block parses the result,future fields added here
     parsed_dic = {}
     for x in range(max_query):
         parsed_dic[x] = {}
+        parsed_dic[x]['country'] = response[x].get("country", None)
         parsed_dic[x]['user_args'] = user_args
-        parsed_dic[x]['itemId'] = response[x].get("itemId",None)
+        parsed_dic[x]['itemId'] = response[x].get("itemId", None)
         parsed_dic[x]["title"] = response[x].get("title", None)
-        parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",None)
+        parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",
+                                                                                                               None)
         parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
     return jsonify(parsed_dic)
 
@@ -87,33 +89,30 @@ def generate_json_for_gui(response, max_query, user_args):
 def check_if_resp_empty(response):
     amount_of_products = response["searchResult"]["_count"]
     if int(amount_of_products) > 0:
-        return response["searchResult"]['item'],int(amount_of_products)
+        return response["searchResult"]['item'], int(amount_of_products)
     else:
-        return custom_error(444, "No results found", "new_search"),0
+        return custom_error(444, "No results found", "new_search"), 0
 
 
 # Ebay Sdk Pratice
 class EbayTesting(Resource):
     def get(self):
-        # this will be changed since we will get query from the gui,parse it from the endpoint
-        # craft the custom api request , parse the response from ebay and pass the dict/json to gui
-        # added the appid since its for the sandbox mode and doesn't pose a major risk
-
-        api = Finding(domain='svcs.sandbox.ebay.com', appid="AdrianNa-CSC380-SBX-ec22ddb1d-3bd0ef52",
-                      config_file="myebay.yaml")
+        api = Finding(config_file="ebay.yaml")
         user_param = parse_params_api_search()
         custom_search = gen_custom_search(user_param)
         response = api.execute('findItemsAdvanced', custom_search)
-        if response is None:
-            return custom_error(400, "Couldn't connect to Ebay", "check your connection")
         ebay_response = response.dict()
-        ebay_response,count = check_if_resp_empty(ebay_response)
+        if "Failure" in ebay_response['ack']:
+            return custom_error(400, "Not a valid search.", "Try a different search ")
+        # sandbox had some issues returning a response with no entries
+        ebay_response, count = check_if_resp_empty(ebay_response)
 
         if isinstance(ebay_response, Response):
             return ebay_response
         else:
 
-            return generate_json_for_gui(ebay_response,count, user_param)  # custom_search does have the dict
+            return generate_json_for_gui(ebay_response, count, user_param)  # custom_search does have the dict
+
 
 class GuiQuery(Resource):
     # remove the requested objected
@@ -141,7 +140,8 @@ class GuiQuery(Resource):
             return custom_error(404, "the dic is empty", "display_empty")
         return watch_list.dump_list()
 
-api.add_resource(EbayTesting, '/search')# this is for the watchlists
-api.add_resource(GuiQuery, '/order66') # this is for the query
+
+api.add_resource(EbayTesting, '/search')  # this is for the watchlists
+api.add_resource(GuiQuery, '/order66')  # this is for the query
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
