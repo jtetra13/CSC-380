@@ -97,6 +97,7 @@ def check_if_resp_empty(response):
 
 # Ebay Sdk Pratice
 class EbayTesting(Resource):
+    @cors.crossdomain(origin='*')
     def get(self):
         api = Finding(config_file="ebay.yaml")
         user_param = parse_params_api_search()
