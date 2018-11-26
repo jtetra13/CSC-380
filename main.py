@@ -1,5 +1,6 @@
 from flask import Flask, redirect, request, Response, jsonify, url_for, render_template
 from flask_restful import Resource, Api, reqparse
+from flask_restful.utils import cors
 from ebaysdk.finding import Connection as Finding
 import WatchList
 
@@ -140,8 +141,13 @@ class GuiQuery(Resource):
             return custom_error(404, "the dic is empty", "display_empty")
         return watch_list.dump_list()
 
+class test_cors(Resource):
+    @cors.crossdomain(origin='*')
+    def get(self):
+        return jsonify({"hello":"world"})
 
 api.add_resource(EbayTesting, '/search')  # this is for the watchlists
 api.add_resource(GuiQuery, '/order66')  # this is for the query
+api.add_resource(test_cors, '/corey')
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
