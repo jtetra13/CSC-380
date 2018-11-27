@@ -1,27 +1,4 @@
-import json
 import fileinput
-
-
-# expect dictionary that takes in title, price, itemId, country
-# input_dict = {
-#   "title" : "ball",
-#   "price" : { price_no_shipping : 8.40 , price_with_shipping : 9.30 } # change this here 
-#   "itemId" : 102,
-#   "country" : "America"
-
-# example file:
-# >
-# itemId,102
-# title,ball
-# price_no_shipping,7.50
-# price_with_shipping,9.30
-# country,America
-# >
-# itemId,430
-# title,harry potter
-# price_no_shipping,3.20
-# price_with_shipping,3.40
-# country,Japan
 
 class LocalFile:
     def init_file(self):
@@ -83,13 +60,3 @@ class LocalFile:
         except IOError as e:
             print('File does not exist, no items in the watchlist. \n')
 
-# example of print dict:
-# {'item1': {'itemId': '102', 'title': 'ball', 'price_no_shipping': '7.50', 'price_with_shipping': '8.23', 'country': 'America'}, 'item2': {'itemId': '798', 'title': 'basket', 'price_no_shipping': '2.50', 'price_with_shipping': '5.32', 'country': 'Japan'}}
-# example = {"itemId" : "102", "title" : "ball", "price" : {"price_no_shipping" : "7.50", "price_with_shipping" : "8.23"}, "country" : "America"}
-# example2 = {"itemId" : "798", "title" : "basket", "price" : {"price_no_shipping" : "2.50", "price_with_shipping" : "5.32"}, "country" : "Japan"}
-
-# testing
-# List.add(example)
-# List.add(example2)
-# List.delete("102")
-# List.dump_dict()

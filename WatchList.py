@@ -45,6 +45,9 @@ class watchList:
         else:
             return self.watch_men.dump_dict()
 
+    #def sync_file(self):
+
+
     # checks to see if product list is empty
     def check_if_empty(self):
         # empty dics eval to false
@@ -52,3 +55,6 @@ class watchList:
             return True
         else:
             return False
+
+  def get_memory(self):
+        return self.product_list
