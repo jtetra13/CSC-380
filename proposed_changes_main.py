@@ -116,7 +116,7 @@ def check_if_resp_empty(response):
 # Ebay Sdk Pratice
 class EbayTesting(Resource):
     def get(self):
-        api = Finding(domain='svcs.ebay.com', appid="AdrianNa-CSC380-PRD-bc22b8256-afed3cbd",config_file=None)
+        api = Finding()
         user_param = parse_params_api_search()
         custom_search = gen_custom_search(user_param)
         response = api.execute('findItemsAdvanced', custom_search)
