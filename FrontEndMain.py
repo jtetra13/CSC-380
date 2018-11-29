@@ -3,6 +3,7 @@ import webbrowser
 import requests
 import json
 import array as arr
+import os
 from time import sleep
 
 def callback(event):
@@ -24,7 +25,9 @@ class Page1(Page):
         T2.insert(END, "This is the About page where a brief explanation\n of everyone who has worked on this project and\n what they did will be explained.")
 
 k = 0
-num_lines = sum(1 for line in open('/Users/Sean/Downloads/CSC-380-master/watch_list.txt'))
+path = os.getcwd()
+watch_path = os.path.join(path, "watch_list.txt")
+num_lines = sum(1 for line in open(watch_path))
 n = (num_lines/5)
 i=0
 pageNum=1
@@ -238,7 +241,9 @@ class Page2(Page):
                 self.titleOf6.set(rget['item6']['title'])
     def showWList(self):
         global n
-        num_lines = sum(1 for line in open('/Users/Sean/Downloads/CSC-380-master/watch_list.txt'))
+        path = os.getcwd()
+        watch_path = os.path.join(path, "watch_list.txt")
+        num_lines = sum(1 for line in open(watch_path))
         n = (num_lines/5)
         print(n)
         self.labelChange.set("Watchlist")
