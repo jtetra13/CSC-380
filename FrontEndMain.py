@@ -3,11 +3,18 @@ import webbrowser
 import requests
 import json
 import array as arr
+import cv2
+import urllib.request
 import os
+from io import BytesIO
 from time import sleep
+from PIL import Image, ImageTk
 
 def callback(event):
     webbrowser.open_new(r"https://www.ebay.com/help/home")
+
+def callPic(event):
+    webbrowser.open_new(event.widget.cget("text"))
 
 class Page(Frame):
     def __init__(self, *args, **kwargs):
@@ -25,10 +32,11 @@ class Page1(Page):
         T2.insert(END, "This is the About page where a brief explanation\n of everyone who has worked on this project and\n what they did will be explained.")
 
 k = 0
-path = os.getcwd()
-watch_path = os.path.join(path, "watch_list.txt")
-num_lines = sum(1 for line in open(watch_path))
-n = (num_lines/5)
+#path = os.getcwd()
+#watch_path = os.path.join(path, "watch_list.txt")
+num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
+n = (num_lines/6)
+print(n)
 i=0
 pageNum=1
 class Page2(Page):
@@ -156,6 +164,8 @@ class Page2(Page):
             i=i+1
     def wListNext(self):
         global n
+        num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
+        n = (num_lines/6)
         self.labelChange.set("Watchlist")
         rget = requests.get("http://127.0.0.2:5000/order66").json()
         print(n)
@@ -241,16 +251,10 @@ class Page2(Page):
                 self.titleOf6.set(rget['item6']['title'])
     def showWList(self):
         global n
-        path = os.getcwd()
-        watch_path = os.path.join(path, "watch_list.txt")
-        num_lines = sum(1 for line in open(watch_path))
-        n = (num_lines/5)
-        print(n)
         self.labelChange.set("Watchlist")
         rget = requests.get("http://127.0.0.2:5000/order66").json()
         print(n)
         print(rget)
-        #for x in range(1, int(n+1)):
         if(int(n)==1):
             self.priceOf1.set(rget['item1']['price_no_shipping'])
             self.titleOf1.set(rget['item1']['title'])
@@ -329,7 +333,6 @@ class Page2(Page):
             self.titleOf5.set(rget['item5']['title'])
             self.priceOf6.set(rget['item6']['price_no_shipping'])
             self.titleOf6.set(rget['item6']['title'])
-
         self.var1.set(0)
         self.var2.set(0)
         self.var3.set(0)
@@ -345,36 +348,49 @@ class Page2(Page):
         root.update_idletasks()
         try:
             json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=6&page_number="+str(pageNum)).json()
+            print(json_data)
             firstPrice = json_data['0']['price']
             firstTitle = json_data['0']['title']
             firstID = json_data['0']['itemId']
             firstShipping = json_data['0']['shippingCost']['shipToLocations']
             firstCountry = json_data['0']['country']
+            firstImage = json_data['0']['image_url']
+            firstList = json_data['0']['list_type']
             secondPrice = json_data['1']['price']
             secondTitle = json_data['1']['title']
             secondID = json_data['1']['itemId']
             secondShipping = json_data['1']['shippingCost']['shipToLocations']
             secondCountry = json_data['1']['country']
+            secondImage = json_data['1']['image_url']
+            secondList = json_data['1']['list_type']
             thirdPrice = json_data['2']['price']
             thirdTitle = json_data['2']['title']
             thirdID = json_data['2']['itemId']
             thirdShipping = json_data['2']['shippingCost']['shipToLocations']
             thirdCountry = json_data['2']['country']
+            thirdImage = json_data['2']['image_url']
+            thirdList = json_data['2']['list_type']
             fourthPrice = json_data['3']['price']
             fourthTitle = json_data['3']['title']
             fourthID = json_data['3']['itemId']
             fourthShipping = json_data['3']['shippingCost']['shipToLocations']
             fourthCountry = json_data['3']['country']
+            fourthImage = json_data['3']['image_url']
+            fourthList = json_data['3']['list_type']
             fifthPrice = json_data['4']['price']
             fifthTitle = json_data['4']['title']
             fifthID = json_data['4']['itemId']
             fifthShipping = json_data['4']['shippingCost']['shipToLocations']
             fifthCountry = json_data['4']['country']
+            fifthImage = json_data['4']['image_url']
+            fifthList = json_data['4']['list_type']
             sixthPrice = json_data['5']['price']
             sixthTitle = json_data['5']['title']
             sixthID = json_data['5']['itemId']
             sixthShipping = json_data['5']['shippingCost']['shipToLocations']
             sixthCountry = json_data['5']['country']
+            sixthImage = json_data['5']['image_url']
+            sixthList = json_data['5']['list_type']
         except:
             print("Connection refused")
 
@@ -384,7 +400,9 @@ class Page2(Page):
             'price': firstPrice,
             'shipping': firstShipping,
             'itemId': firstID,
-            'country': firstCountry
+            'country': firstCountry,
+            'image_url': firstImage,
+            'list_type': firstList
             }
             rput1 =requests.put("http://127.0.0.2:5000/order66",data1)
             print(rput1)
@@ -395,7 +413,9 @@ class Page2(Page):
             'price': secondPrice,
             'shipping': secondShipping,
             'itemId': secondID,
-            'country': secondCountry
+            'country': secondCountry,
+            'image_url': secondImage,
+            'list_type': secondList
             }
             rput2 =requests.put("http://127.0.0.2:5000/order66",data2)
             print(rput2)
@@ -406,7 +426,9 @@ class Page2(Page):
             'price': thirdPrice,
             'shipping': thirdShipping,
             'itemId': thirdID,
-            'country': thirdCountry
+            'country': thirdCountry,
+            'image_url': thirdImage,
+            'list_type': thirdList
             }
             rput3 =requests.put("http://127.0.0.2:5000/order66",data3)
             print(rput3)
@@ -417,7 +439,9 @@ class Page2(Page):
             'price': fourthPrice,
             'shipping': fourthShipping,
             'itemId': fourthID,
-            'country': fourthCountry
+            'country': fourthCountry,
+            'image_url': fourthImage,
+            'list_type': fourthList
             }
             rput4 =requests.put("http://127.0.0.2:5000/order66",data4)
             print(rput4)
@@ -428,7 +452,9 @@ class Page2(Page):
             'price': fifthPrice,
             'shipping': fifthShipping,
             'itemId': fifthID,
-            'country': fifthCountry
+            'country': fifthCountry,
+            'image_url': fifthImage,
+            'list_type': fifthList
             }
             rput5 =requests.put("http://127.0.0.2:5000/order66",data5)
             print(rput5)
@@ -439,7 +465,9 @@ class Page2(Page):
             'price': sixthPrice,
             'shipping': sixthShipping,
             'itemId': sixthID,
-            'country': sixthCountry
+            'country': sixthCountry,
+            'image_url': sixthImage,
+            'list_type': sixthList
             }
             rput6 =requests.put("http://127.0.0.2:5000/order66",data6)
             print(rput6)
@@ -450,42 +478,40 @@ class Page2(Page):
         global pageNum
         item = self.mEntry.get()
         root.update_idletasks()
-        try:
-            json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=6&page_number="+str(pageNum)).json()
-            print(json_data)
-            firstPrice = json_data['0']['price']
-            firstTitle = json_data['0']['title']
-            firstImage = json_data['0']['image_url']
-            self.priceOf1.set(firstPrice)
-            self.titleOf1.set(firstTitle)
-            #self.image1 = Image.open(firstImage)
-            secondPrice = json_data['1']['price']
-            secondTitle = json_data['1']['title']
-            secondImage = json_data['1']['image_url']
-            self.priceOf2.set(secondPrice)
-            self.titleOf2.set(secondTitle)
-            thirdPrice = json_data['2']['price']
-            thirdTitle = json_data['2']['title']
-            thirdImage = json_data['2']['image_url']
-            self.priceOf3.set(thirdPrice)
-            self.titleOf3.set(thirdTitle)
-            fourthPrice = json_data['3']['price']
-            fourthTitle = json_data['3']['title']
-            fourthImage = json_data['3']['image_url']
-            self.priceOf4.set(fourthPrice)
-            self.titleOf4.set(fourthTitle)
-            fifthPrice = json_data['4']['price']
-            fifthTitle = json_data['4']['title']
-            fifthImage = json_data['4']['image_url']
-            self.priceOf5.set(fifthPrice)
-            self.titleOf5.set(fifthTitle)
-            sixthPrice = json_data['5']['price']
-            sixthTitle = json_data['5']['title']
-            firstImage = json_data['5']['image_url']
-            self.priceOf6.set(sixthPrice)
-            self.titleOf6.set(sixthTitle)
-        except:
-            print("Connection refused")
+        json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=6&page_number="+str(pageNum)).json()
+        print(json_data)
+        firstPrice = json_data['0']['price']
+        firstTitle = json_data['0']['title']
+        firstImage = json_data['0']['image_url']
+        self.priceOf1.set(firstPrice)
+        self.titleOf1.set(firstTitle)
+        self.pic1.set(firstImage)
+        secondPrice = json_data['1']['price']
+        secondTitle = json_data['1']['title']
+        secondImage = json_data['1']['image_url']
+        self.priceOf2.set(secondPrice)
+        self.titleOf2.set(secondTitle)
+        thirdPrice = json_data['2']['price']
+        thirdTitle = json_data['2']['title']
+        thirdImage = json_data['2']['image_url']
+        self.priceOf3.set(thirdPrice)
+        self.titleOf3.set(thirdTitle)
+        fourthPrice = json_data['3']['price']
+        fourthTitle = json_data['3']['title']
+        fourthImage = json_data['3']['image_url']
+        self.priceOf4.set(fourthPrice)
+        self.titleOf4.set(fourthTitle)
+        fifthPrice = json_data['4']['price']
+        fifthTitle = json_data['4']['title']
+        fifthImage = json_data['4']['image_url']
+        self.priceOf5.set(fifthPrice)
+        self.titleOf5.set(fifthTitle)
+        sixthPrice = json_data['5']['price']
+        sixthTitle = json_data['5']['title']
+        sixthImage = json_data['5']['image_url']
+        self.priceOf6.set(sixthPrice)
+        self.titleOf6.set(sixthTitle)
+
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
         canvas = Canvas(self, height = root.winfo_screenheight(),width = root.winfo_screenwidth(), scrollregion=(0, 0, 1700, 1700))
@@ -525,8 +551,13 @@ class Page2(Page):
         canvas.create_line(1300, 450, 1300, 250)
         #Little Box Goes Top,Bottom,left,right line
         #Need to replace rectangle with create_image
-        #self.image1 = PhotoImage()
-        #canvas.create_image(160, 160, image=self.image1)
+
+        #self.imageVar = '/Users/Sean/Desktop/CSC-380-master/Panda.jpg'
+        #image = Image.open(str(self.imageVar))
+        #photo = ImageTk.PhotoImage(image)
+        #self.image1 = Label(image=photo)
+        #self.image1.image = photo
+        #canvas.create_window(160, 160, window=self.image1)
         #Mid box, Goes Bottom,left,right line
         canvas.create_line(50, 650, 1300, 650)
         canvas.create_line(50, 650, 50, 450)
@@ -654,9 +685,14 @@ class Page2(Page):
         wListprevPage = Button(canvas, text="Watch List Previous Page", command=self.showWList)
         canvas.create_window(600, 1600, window=wListprevPage)
         #Show Ignore list
-        showIgnore = Button(canvas, text="Show Ignore List", command=self.showWList)
+        showIgnore = Button(canvas, text="Show Watch List", command=self.showWList)
         canvas.create_window(800, 1500, window=showIgnore)
-
+        #Picture Button
+        self.pic1 = StringVar()
+        showPicture = Button(canvas, text="Show Picture", textvariable=str(self.pic1))
+        showPicture.bind("<Button-1>", callPic)
+        canvas.create_window(1000, 1500, window=showPicture)
+        #Update list
         getNum = Button(canvas, text="Update List", command=self.addToWList)
         canvas.create_window(200, 1500, window=getNum)
         #Scroll bar
