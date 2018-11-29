@@ -1,6 +1,5 @@
 import LocalFile
 
-
 class watchList:
     def __init__(self):
         # creates the path to the persistent file
@@ -18,18 +17,21 @@ class watchList:
             return live_watch_list
 
     def add_item(self, item_dict):
-        if item_dict['itemId'] in self.product_list:
-            return False  # this values already exists
-        else:
-            self.product_list[item_dict['itemId']] = item_dict
-            self.watch_men.add(item_dict)
-            return True
-
+            if item_dict['itemId'] in self.product_list:
+                return False  # this values already exists
+            else:
+                try:
+                    self.product_list[item_dict['itemId']] = item_dict
+                    self.watch_men.add(item_dict)
+                    return True
+                except:
+                    return 444
     def delete_item(self, item_dict):
         tmp_id = item_dict['itemId']
         try:
-            del self.product_list[item_dict['itemId']]
-            self.watch_men.delete(item_dict['itemId'])
+            if self.check_if_memory_empty() is False:
+                del self.product_list[item_dict['itemId']]
+                self.watch_men.delete(item_dict['itemId'])
         except:
             return 444  # means it didn;t find the key so exception raised
         if tmp_id in self.product_list:
@@ -39,20 +41,22 @@ class watchList:
 
     # returns the dict of items in the watch list
     def dump_list(self):
-        if self.check_if_empty() is True:
-            return False  # keep it consistent
+        resp = self.watch_men.dump_dict()
+        if resp is not False:
+            return resp  # keep it consistent
         else:
-            return self.watch_men.dump_dict()
-
-    # def sync_file(self):
+            return dict()
 
     # checks to see if product list is empty
-    def check_if_empty(self):
+    def check_if_file_empty(self):
         # empty dics eval to false
+        resp = self.watch_men.dump_dict()
+        if resp is False:
+            return True
+        else:
+            return False
+    def check_if_memory_empty(self):
         if self.product_list is False:
             return True
         else:
             return False
-
-    def get_memory(self):
-        return self.product_list

@@ -10,6 +10,9 @@ ignore_list = IgnoreList.IgnoreList()
 # this parser is going to be depreciated but limiting additional dependecies
 parser = reqparse.RequestParser()
 gui_parser = reqparse.RequestParser()
+order66_parser =reqparse.RequestParser()
+
+order66_parser.add_argument('list_type',type=int)
 
 gui_parser.add_argument('title', required=True)
 gui_parser.add_argument('price', required=True)
@@ -59,6 +62,12 @@ def parse_params_api_search():
         [('entries_per_page', returned_args['items_per_page']), ('page_number', returned_args['page_number'])])
     dikta['advanced'] = None  # reach goal for gui
     return dikta
+
+def parse_order66_get():
+    stalin = dict()
+    ret_args = order66_parser.parse_args()
+    stalin['list_type']= ret_args['list_type']
+    return stalin
 
 
 def parse_params_gui_query():
@@ -180,17 +189,16 @@ class GuiQuery(Resource):
             return resp
         return custom_error(400, "item already exists","no_action")
     def watch_list_get(self):
-        if watch_list.check_if_empty() is False:
+        if watch_list.check_if_file_empty() is False:
             return watch_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
     def ignore_list_get(self):
-        if ignore_list.check_if_empty() is False:
+        if ignore_list.check_if_file_empty() is False:
             return ignore_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
     def get(self):
         # get the requested element
-        parse_result = parse_params_gui_query()
-        resp =None
+        parse_result = parse_order66_get()
         if parse_result['list_type'] == 1:
             return self.watch_list_get()
         elif parse_result['list_type'] ==2:
