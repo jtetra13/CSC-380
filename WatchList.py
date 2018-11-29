@@ -3,8 +3,8 @@ import LocalFile
 
 class watchList:
     def __init__(self):
-        #creates the path to the persistent file
-        self.watch_men= LocalFile.LocalFile()
+        # creates the path to the persistent file
+        self.watch_men = LocalFile.LocalFile()
         self.product_list = self.load_watch_list()
 
     # this method loads the watchlist from the file into memory.
@@ -19,12 +19,11 @@ class watchList:
 
     def add_item(self, item_dict):
         if item_dict['itemId'] in self.product_list:
-             False # this values already exists
+            return False  # this values already exists
         else:
             self.product_list[item_dict['itemId']] = item_dict
             self.watch_men.add(item_dict)
             return True
-
 
     def delete_item(self, item_dict):
         tmp_id = item_dict['itemId']
@@ -34,19 +33,18 @@ class watchList:
         except:
             return 444  # means it didn;t find the key so exception raised
         if tmp_id in self.product_list:
-            return False # throw custom error
+            return False  # throw custom error
         else:
             return True
 
-    #returns the dict of items in the watch list
+    # returns the dict of items in the watch list
     def dump_list(self):
         if self.check_if_empty() is True:
-            return self.product_list # keep it consistent
+            return False  # keep it consistent
         else:
             return self.watch_men.dump_dict()
 
-    #def sync_file(self):
-
+    # def sync_file(self):
 
     # checks to see if product list is empty
     def check_if_empty(self):
@@ -56,5 +54,5 @@ class watchList:
         else:
             return False
 
-  def get_memory(self):
+    def get_memory(self):
         return self.product_list

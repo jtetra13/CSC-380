@@ -1,11 +1,12 @@
 from flask import Flask, redirect, request, Response, jsonify, url_for, render_template
 from flask_restful import Resource, Api, reqparse
 from ebaysdk.finding import Connection as Finding
-import WatchList
+import WatchList, IgnoreList
 
 app = Flask(__name__)
 api = Api(app)
 watch_list = WatchList.watchList()
+ignore_list = IgnoreList.IgnoreList()
 # this parser is going to be depreciated but limiting additional dependecies
 parser = reqparse.RequestParser()
 gui_parser = reqparse.RequestParser()
@@ -15,6 +16,7 @@ gui_parser.add_argument('price', required=True)
 gui_parser.add_argument('itemId', required=True)
 gui_parser.add_argument('country', required=True)
 gui_parser.add_argument('shipping', required=True)
+gui_parser.add_argument('list_type', type=int)
 
 parser.add_argument('search_param', action='append', required=True)  # user string
 parser.add_argument('items_per_page', type=int, required=True)
@@ -66,6 +68,10 @@ def parse_params_gui_query():
     nikta['price'] = dict([('price_no_shipping', ret_args['price']), ('price_shipping', ret_args['shipping'])])
     nikta['itemId'] = ret_args['itemId']
     nikta['country'] = ret_args['country']
+    if ret_args['list_type'] is not None:
+        nikta['list_type'] = ret_args['list_type']
+    else:
+        nikta['list_type'] = None
     return nikta
 
 
@@ -82,6 +88,7 @@ def generate_json_for_gui(response, max_query, user_args):
         parsed_dic[x]["title"] = response[x].get("title", None)
         parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",
                                                                                                                None)
+        parsed_dic[x]['image_url'] = response[x].get("galleryURL", None)
         parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
     return jsonify(parsed_dic)
 
@@ -110,17 +117,13 @@ class EbayTesting(Resource):
         if isinstance(ebay_response, Response):
             return ebay_response
         else:
-
             return generate_json_for_gui(ebay_response, count, user_param)  # custom_search does have the dict
 
 
 class GuiQuery(Resource):
     # remove the requested objected
-    def delete(self):
-        parse_res = parse_params_gui_query()
-        if watch_list.check_if_empty():
-            return custom_error(404, "the watchlist is empty. This action isnt legal", "display_empty")
-        else:
+    def watch_list_delete(self, parse_res):
+        if watch_list.check_if_empty() is not True:
             reznov = watch_list.delete_item(parse_res)
             if reznov is True:
                 return 200
@@ -128,20 +131,72 @@ class GuiQuery(Resource):
                 return custom_error(444, "Key doesn't exist", "nothing")
             else:
                 return custom_error(reznov, "The action failed to delete the item", "repeat_action")
+        else:
+            return custom_error(404, "the watchlist is empty. This action isnt legal", "display_empty")
 
-    def put(self):
-        parse_result = parse_params_gui_query()
+    def ignore_list_delete(self, parse_res):
+        if ignore_list.check_if_empty():
+            reznov = ignore_list.delete_item(parse_res)
+            if reznov is True:
+                return 200
+            elif reznov == 444:
+                return custom_error(444, "Key doesn't exist", "nothing")
+            else:
+                return custom_error(reznov, "The action failed to delete the item", "repeat_action")
+
+        else:
+            return custom_error(404, "the ignorelist is empty. This action isnt legal", "display_empty")
+
+    def delete(self):
+        parse_res = parse_params_gui_query()
+        if parse_res['list_type'] == 1:
+            return self.watch_list_delete( parse_res)
+        elif parse_res['list_type'] == 2:
+            return self.ignore_list_delete(parse_res)
+        else:
+            return custom_error(40, "the provided values is not valid.Pick 1 for watchlist and 2 for ignoreList",
+                                "repick")
+
+    def watch_list_put(self,parse_result):
         resp = watch_list.add_item(parse_result)
-        if resp ==400 or resp ==444:
+        if resp is False:
+            return resp
+        else:
+            return 200
+    def ignore_list_put(parse_result):
+        resp = ignore_list.add_item(parse_result)
+        if resp is False:
             return resp
         else:
             return 200
 
+    def put(self):
+        parse_result = parse_params_gui_query()
+        resp =None
+        if parse_result['list_type'] == 1:
+            #print(parse_result)
+            resp =self.watch_list_put(parse_result)
+        if resp is not False:
+            return resp
+        return custom_error(400, "item already exists","no_action")
+    def watch_list_get(self):
+        if watch_list.check_if_empty() is False:
+            return watch_list.dump_list()
+        return custom_error(404, "the dic is empty", "display_empty")
+    def ignore_list_get(self):
+        if ignore_list.check_if_empty() is False:
+            return ignore_list.dump_list()
+        return custom_error(404, "the dic is empty", "display_empty")
     def get(self):
         # get the requested element
-        if watch_list.check_if_empty():
-            return custom_error(404, "the dic is empty", "display_empty")
-        return watch_list.dump_list()
+        parse_result = parse_params_gui_query()
+        resp =None
+        if parse_result['list_type'] == 1:
+            return self.watch_list_get()
+        elif parse_result['list_type'] ==2:
+            return self.ignore_list_get()
+        else:
+            return False
 
 
 api.add_resource(EbayTesting, '/search')  # this is for the watchlists

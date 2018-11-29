@@ -17,7 +17,7 @@ class IgnoreList:
 
     def add_item(self, item_dict):
         if item_dict['itemId'] in self.product_list:
-             False # this values already exists
+             return False # this values already exists
         else:
             self.product_list[item_dict['itemId']] = item_dict
             self.watch_men.add(item_dict)
@@ -39,7 +39,7 @@ class IgnoreList:
     #returns the dict of items in the watch list
     def dump_list(self):
         if self.check_if_empty() is True:
-            return self.product_list # keep it consistent
+            return False # keep it consistent
         else:
             return self.watch_men.dump_dict()
 

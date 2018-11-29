@@ -17,7 +17,7 @@ class LocalFile:
                     for key2, value2 in input_dict[key].items():
                         f.write(key2 + ',' + value2 + '\n')
                 else:
-                    f.write(key + ',' + input_dict[key] + '\n')
+                    f.write(str(key) + ',' + str(input_dict[key]) + '\n')
         f.close()
 
     def delete(self,itemId):
