@@ -174,7 +174,7 @@ class GuiQuery(Resource):
         else:
             return 200
 
-    def ignore_list_put(parse_result):
+    def ignore_list_put(self, parse_result):
         resp = ignore_list.add_item(parse_result)
         if resp is False:
             return resp
