@@ -164,6 +164,8 @@ class Page2(Page):
             i=i+1
     def wListNext(self):
         global n
+        #path = os.getcwd()
+        #watch_path = os.path.join(path, "watch_list.txt")
         num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
         n = (num_lines/6)
         self.labelChange.set("Watchlist")
@@ -252,7 +254,7 @@ class Page2(Page):
     def showWList(self):
         global n
         self.labelChange.set("Watchlist")
-        rget = requests.get("http://127.0.0.2:5000/order66").json()
+        rget = requests.get("http://127.0.0.2:5000/order66?list_type=1").json()
         print(n)
         print(rget)
         if(int(n)==1):
@@ -355,42 +357,36 @@ class Page2(Page):
             firstShipping = json_data['0']['shippingCost']['shipToLocations']
             firstCountry = json_data['0']['country']
             firstImage = json_data['0']['image_url']
-            firstList = json_data['0']['list_type']
             secondPrice = json_data['1']['price']
             secondTitle = json_data['1']['title']
             secondID = json_data['1']['itemId']
             secondShipping = json_data['1']['shippingCost']['shipToLocations']
             secondCountry = json_data['1']['country']
             secondImage = json_data['1']['image_url']
-            secondList = json_data['1']['list_type']
             thirdPrice = json_data['2']['price']
             thirdTitle = json_data['2']['title']
             thirdID = json_data['2']['itemId']
             thirdShipping = json_data['2']['shippingCost']['shipToLocations']
             thirdCountry = json_data['2']['country']
             thirdImage = json_data['2']['image_url']
-            thirdList = json_data['2']['list_type']
             fourthPrice = json_data['3']['price']
             fourthTitle = json_data['3']['title']
             fourthID = json_data['3']['itemId']
             fourthShipping = json_data['3']['shippingCost']['shipToLocations']
             fourthCountry = json_data['3']['country']
             fourthImage = json_data['3']['image_url']
-            fourthList = json_data['3']['list_type']
             fifthPrice = json_data['4']['price']
             fifthTitle = json_data['4']['title']
             fifthID = json_data['4']['itemId']
             fifthShipping = json_data['4']['shippingCost']['shipToLocations']
             fifthCountry = json_data['4']['country']
             fifthImage = json_data['4']['image_url']
-            fifthList = json_data['4']['list_type']
             sixthPrice = json_data['5']['price']
             sixthTitle = json_data['5']['title']
             sixthID = json_data['5']['itemId']
             sixthShipping = json_data['5']['shippingCost']['shipToLocations']
             sixthCountry = json_data['5']['country']
             sixthImage = json_data['5']['image_url']
-            sixthList = json_data['5']['list_type']
         except:
             print("Connection refused")
 
@@ -402,7 +398,7 @@ class Page2(Page):
             'itemId': firstID,
             'country': firstCountry,
             'image_url': firstImage,
-            'list_type': firstList
+            'list_type': 1
             }
             rput1 =requests.put("http://127.0.0.2:5000/order66",data1)
             print(rput1)
@@ -415,7 +411,7 @@ class Page2(Page):
             'itemId': secondID,
             'country': secondCountry,
             'image_url': secondImage,
-            'list_type': secondList
+            'list_type': 1
             }
             rput2 =requests.put("http://127.0.0.2:5000/order66",data2)
             print(rput2)
@@ -428,7 +424,7 @@ class Page2(Page):
             'itemId': thirdID,
             'country': thirdCountry,
             'image_url': thirdImage,
-            'list_type': thirdList
+            'list_type': 1
             }
             rput3 =requests.put("http://127.0.0.2:5000/order66",data3)
             print(rput3)
@@ -441,7 +437,7 @@ class Page2(Page):
             'itemId': fourthID,
             'country': fourthCountry,
             'image_url': fourthImage,
-            'list_type': fourthList
+            'list_type': 1
             }
             rput4 =requests.put("http://127.0.0.2:5000/order66",data4)
             print(rput4)
@@ -454,7 +450,7 @@ class Page2(Page):
             'itemId': fifthID,
             'country': fifthCountry,
             'image_url': fifthImage,
-            'list_type': fifthList
+            'list_type': 1
             }
             rput5 =requests.put("http://127.0.0.2:5000/order66",data5)
             print(rput5)
@@ -467,7 +463,7 @@ class Page2(Page):
             'itemId': sixthID,
             'country': sixthCountry,
             'image_url': sixthImage,
-            'list_type': sixthList
+            'list_type': 1
             }
             rput6 =requests.put("http://127.0.0.2:5000/order66",data6)
             print(rput6)
