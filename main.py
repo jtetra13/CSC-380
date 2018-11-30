@@ -10,9 +10,9 @@ ignore_list = IgnoreList.IgnoreList()
 # this parser is going to be depreciated but limiting additional dependecies
 parser = reqparse.RequestParser()
 gui_parser = reqparse.RequestParser()
-order66_parser =reqparse.RequestParser()
+order66_parser = reqparse.RequestParser()
 
-order66_parser.add_argument('list_type',type=int)
+order66_parser.add_argument('list_type', type=int)
 
 gui_parser.add_argument('title', required=True)
 gui_parser.add_argument('price', required=True)
@@ -63,10 +63,11 @@ def parse_params_api_search():
     dikta['advanced'] = None  # reach goal for gui
     return dikta
 
+
 def parse_order66_get():
     stalin = dict()
     ret_args = order66_parser.parse_args()
-    stalin['list_type']= ret_args['list_type']
+    stalin['list_type'] = ret_args['list_type']
     return stalin
 
 
@@ -132,7 +133,7 @@ class EbayTesting(Resource):
 class GuiQuery(Resource):
     # remove the requested objected
     def watch_list_delete(self, parse_res):
-        if watch_list.check_if_empty() is not True:
+        if watch_list.check_if_file_empty() is not True:
             reznov = watch_list.delete_item(parse_res)
             if reznov is True:
                 return 200
@@ -159,19 +160,20 @@ class GuiQuery(Resource):
     def delete(self):
         parse_res = parse_params_gui_query()
         if parse_res['list_type'] == 1:
-            return self.watch_list_delete( parse_res)
+            return self.watch_list_delete(parse_res)
         elif parse_res['list_type'] == 2:
             return self.ignore_list_delete(parse_res)
         else:
             return custom_error(40, "the provided values is not valid.Pick 1 for watchlist and 2 for ignoreList",
                                 "repick")
 
-    def watch_list_put(self,parse_result):
+    def watch_list_put(self, parse_result):
         resp = watch_list.add_item(parse_result)
         if resp is False:
             return resp
         else:
             return 200
+
     def ignore_list_put(parse_result):
         resp = ignore_list.add_item(parse_result)
         if resp is False:
@@ -181,27 +183,35 @@ class GuiQuery(Resource):
 
     def put(self):
         parse_result = parse_params_gui_query()
-        resp =None
+        resp = None
         if parse_result['list_type'] == 1:
-            #print(parse_result)
-            resp =self.watch_list_put(parse_result)
+            # print(parse_result)
+            resp = self.watch_list_put(parse_result)
+        elif parse_result['list_type'] == 2:
+            resp = self.ignore_list_put(parse_result)
+        else:
+            return custom_error(400, "item already exists", "no_action")
         if resp is not False:
             return resp
-        return custom_error(400, "item already exists","no_action")
+        else:
+            return custom_error(400, "item already exists", "no_action")
+
     def watch_list_get(self):
         if watch_list.check_if_file_empty() is False:
             return watch_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
+
     def ignore_list_get(self):
         if ignore_list.check_if_file_empty() is False:
             return ignore_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
+
     def get(self):
         # get the requested element
         parse_result = parse_order66_get()
         if parse_result['list_type'] == 1:
             return self.watch_list_get()
-        elif parse_result['list_type'] ==2:
+        elif parse_result['list_type'] == 2:
             return self.ignore_list_get()
         else:
             return False
