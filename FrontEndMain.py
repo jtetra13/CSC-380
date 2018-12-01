@@ -32,15 +32,25 @@ class Page1(Page):
         T2.insert(END, "This is the About page where a brief explanation\n of everyone who has worked on this project and\n what they did will be explained.")
 
 k = 0
-#path = os.getcwd()
-#watch_path = os.path.join(path, "watch_list.txt")
-num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
-n = (num_lines/6)
-print(n)
+path = os.getcwd()
+watch_path = os.path.join(path, "watch_list.txt")
+### SEAN COMMENT OUT ABOVE 2 LINES AND UNCOMMENT BELOW TO WORK FOR YOU
+# watch_path = '/Users/Sean/Desktop/CSC-380-master/watch_list.txt'
+num_lines = sum(1 for line in open(watch_path))
+
+if(os.stat(watch_path).st_size != 0):
+    n = (num_lines/7)
+    print("Number of lines in watchlist: " + str(num_lines))
+    print("Number of items in watchlist: " + str(n))
+else:
+    n = 0
+    print("Number of lines in watchlist: " + str(num_lines))
+    print("Number of items in watchlist: " + str(n))
+
 i=0
 pageNum=1
 class Page2(Page):
-    print(int(n))
+    #print(int(n))
     def updateWList(self):
         sleep(1) # Need this to slow the changes down
         global pageNum
@@ -92,10 +102,10 @@ class Page2(Page):
         #Put delete stuff here
         if(self.var1.get()):
             data1 = {
+            'itemId': firstID,
             'title': firstTitle,
             'price': firstPrice,
             'shipping': firstShipping,
-            'itemId': firstID,
             'country': firstCountry,
             'image_url': firstImage
             }
@@ -104,10 +114,10 @@ class Page2(Page):
             i=i+1
         if(self.var2.get()):
             data2 = {
+            'itemId': secondID,
             'title': secondTitle,
             'price': secondPrice,
             'shipping': secondShipping,
-            'itemId': secondID,
             'country': secondCountry,
             'image_url': secondImage
             }
@@ -116,10 +126,10 @@ class Page2(Page):
             i=i+1
         if(self.var3.get()):
             data3 = {
+            'itemId': thirdID,
             'title': thirdTitle,
             'price': thirdPrice,
             'shipping': thirdShipping,
-            'itemId': thirdID,
             'country': thirdCountry,
             'image_url': thirdImage
             }
@@ -128,10 +138,10 @@ class Page2(Page):
             i=i+1
         if(self.var4.get()):
             data4 = {
+            'itemId': fourthID,
             'title': fourthTitle,
             'price': fourthPrice,
             'shipping': fourthShipping,
-            'itemId': fourthID,
             'country': fourthCountry,
             'image_url': fourthImage
             }
@@ -140,10 +150,10 @@ class Page2(Page):
             i=i+1
         if(self.var5.get()):
             data5 = {
+            'itemId': fifthID,
             'title': fifthTitle,
             'price': fifthPrice,
             'shipping': fifthShipping,
-            'itemId': fifthID,
             'country': fifthCountry,
             'image_url': fifthImage
             }
@@ -152,10 +162,10 @@ class Page2(Page):
             i=i+1
         if(self.var6.get()):
             data6 = {
+            'itemId': sixthID,
             'title': sixthTitle,
             'price': sixthPrice,
             'shipping': sixthShipping,
-            'itemId': sixthID,
             'country': sixthCountry,
             'image_url': sixthImage
             }
@@ -164,9 +174,15 @@ class Page2(Page):
             i=i+1
     def wListNext(self):
         global n
-        #path = os.getcwd()
-        #watch_path = os.path.join(path, "watch_list.txt")
-        num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
+        path = os.getcwd()
+        watch_path = os.path.join(path, "watch_list.txt")
+        num_lines = sum(1 for line in open(watch_path))
+
+        path = os.getcwd()
+        watch_path = os.path.join(path, "watch_list.txt")
+        ### SEAN COMMENT OUT ABOVE 2 LINES AND UNCOMMENT BELOW TO WORK FOR YOU
+        #num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
+ 
         n = (num_lines/6)
         self.labelChange.set("Watchlist")
         rget = requests.get("http://127.0.0.2:5000/order66").json()
@@ -255,8 +271,13 @@ class Page2(Page):
         global n
         self.labelChange.set("Watchlist")
         rget = requests.get("http://127.0.0.2:5000/order66?list_type=1").json()
+
+        print("Number of items in watchlist: " + str(n))
+        print("Watchlist dict: " + json.dumps(rget))
+
         print(n)
         print(rget)
+
         if(int(n)==1):
             self.priceOf1.set(rget['item1']['price_no_shipping'])
             self.titleOf1.set(rget['item1']['title'])
