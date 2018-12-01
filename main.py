@@ -19,6 +19,7 @@ gui_parser.add_argument('price', required=True)
 gui_parser.add_argument('itemId', required=True)
 gui_parser.add_argument('country', required=True)
 gui_parser.add_argument('shipping', required=True)
+gui_parser.add_argument('image_url', required=True)
 gui_parser.add_argument('list_type', type=int)
 
 parser.add_argument('search_param', action='append', required=True)  # user string
@@ -74,10 +75,11 @@ def parse_order66_get():
 def parse_params_gui_query():
     nikta = dict()
     ret_args = gui_parser.parse_args()
+    nikta['itemId'] = ret_args['itemId']
     nikta['title'] = ret_args['title']
     nikta['price'] = dict([('price_no_shipping', ret_args['price']), ('price_shipping', ret_args['shipping'])])
-    nikta['itemId'] = ret_args['itemId']
     nikta['country'] = ret_args['country']
+    nikta['image_url'] = ret_args['image_url']
     if ret_args['list_type'] is not None:
         nikta['list_type'] = ret_args['list_type']
     else:
@@ -119,11 +121,23 @@ class EbayTesting(Resource):
         custom_search = gen_custom_search(user_param)
         response = api.execute('findItemsAdvanced', custom_search)
         ebay_response = response.dict()
+
         if "Failure" in ebay_response['ack']:
             return custom_error(400, "Not a valid search.", "Try a different search ")
         # sandbox had some issues returning a response with no entries
         ebay_response, count = check_if_resp_empty(ebay_response)
 
+        parse_result = parse_order66_get()
+        
+        # this works but still needs to be implemented
+        #il = IgnoreList.IgnoreList()
+        #if not il.check_if_empty:
+        #    ignore_list = {}
+        #    gq = GuiQuery()
+        #    GuiQuery.ignore_list_get(gq)
+        #    ignore_list = gq.ignore_list_get()
+        
+        
         if isinstance(ebay_response, Response):
             return ebay_response
         else:
@@ -202,7 +216,7 @@ class GuiQuery(Resource):
         return custom_error(404, "the dic is empty", "display_empty")
 
     def ignore_list_get(self):
-        if ignore_list.check_if_file_empty() is False:
+        if ignore_list.check_if_empty is False:
             return ignore_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
 
