@@ -35,7 +35,7 @@ class LocalFile:
                     for _ in range(6):
                         next(f, None)
                 else:
-                    print(line, end='\r')
+                    print(line.strip())
             f.close()
         except IOError as e:
             print('File does not exist, cannot delete item. \n')
@@ -65,7 +65,7 @@ class LocalFile:
                     inner_dict[list_input[0]] = list_input[1]
                     line_counter = line_counter + 1
 
-                if line_counter % 7 == 0:
+                if line_counter % 7 == 0 and bool(inner_dict):
                     watch_list[itemName] = inner_dict 
                     inner_dict = {}
                     item_counter = item_counter + 1
@@ -81,7 +81,21 @@ class LocalFile:
 #lf = LocalFile()
 #print(lf.dump_dict())
 #print(" ")
-#lf.delete("273547574855")
+#lf.delete("273246568784")
 #print(lf.dump_dict())
 
-#{'item1': {'itemId': '273547574855', 'title': 'Toys For Boys Kids Children Soccer Hover Ball for 3 4 5 6 7 8 9 10 Years Old Age', 'price_no_shipping': '10.99', 'price_shipping': 'Worldwide', 'country': 'US', 'image_url': 'http://thumbs4.ebaystatic.com/m/m8h89jcoptNACQ2ZpztZn1Q/140.jpg', 'list_type': '1'}, 'item2': {'itemId': '182482406482', 'title': 'Small Dog Clothes Pet Winter Plaid Sweater Puppy Clothing Warm Apparel Coat', 'price_no_shipping': '13.1', 'price_shipping': 'Worldwide', 'country': 'US', 'image_url': 'http://thumbs3.ebaystatic.com/pict/1824824064824040_3.jpg', 'list_type': '1'}}
+
+#>itemId,273547574855
+# title,Toys For Boys Kids Children Soccer Hover Ball for 3 4 5 6 7 8 9 10 Years Old Age
+# price_no_shipping,10.99
+# price_shipping,Worldwide
+# country,US
+# image_url,http://thumbs4.ebaystatic.com/m/m8h89jcoptNACQ2ZpztZn1Q/140.jpg
+# list_type,1
+# >itemId,121413333817
+# title,24Pcs 24K Gold Banana Plug Plugs Audio Speaker Wire Cable Connector
+# price_no_shipping,10.29
+# price_shipping,Worldwide
+# country,US
+# image_url,http://thumbs2.ebaystatic.com/m/m3tkTSqVSuk3rItwQJolF_Q/140.jpg
+# list_type,1
