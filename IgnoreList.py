@@ -33,12 +33,12 @@ class IgnoreList(Locally):
         if resp is not False:
             return resp  # keep it consistent
         else:
-            return dict()
+            return False
 
     def check_if_file_empty(self):
         # empty dics eval to false
         resp = IgnoreList.dump_dict(self,self.list_type)
-        if resp is not False:
+        if bool(resp) is not False:
             return False
         else:
             return True

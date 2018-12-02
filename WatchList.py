@@ -33,13 +33,13 @@ class WatchList(Locally):
         if resp is not False:
             return resp  # keep it consistent
         else:
-            return dict()
+            return False
 
     # checks to see if product list is empty
     def check_if_file_empty(self):
         # empty dics eval to false
         resp = WatchList.dump_dict(self,self.list_name)
-        if resp is not False :
+        if bool(resp) is not False :
             return False
         else:
             return True

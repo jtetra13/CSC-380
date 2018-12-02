@@ -25,8 +25,6 @@ gui_parser.add_argument('list_type', type=int)
 parser.add_argument('search_param', action='append', required=True)  # user string
 parser.add_argument('items_per_page', type=int, required=True)
 parser.add_argument('page_number', type=int, required=True)
-parser.add_argument('list_type',type=int)
-
 
 def custom_error(stat_code, msg, action):
     error_msg = jsonify({
@@ -36,7 +34,6 @@ def custom_error(stat_code, msg, action):
     })
     error_msg.stat_code = stat_code  # this way we can reference it
     return error_msg
-
 
 def gen_custom_search(user_param, ):
     # user_param will be a dict
@@ -59,7 +56,6 @@ def gen_custom_search(user_param, ):
 def parse_params_api_search():
     dikta = dict()
     returned_args = parser.parse_args()
-    dikta['list_type'] = returned_args['list_type']
     dikta['search_terms'] = ''.join(returned_args['search_param'])
     dikta['pages'] = dict(
         [('entries_per_page', returned_args['items_per_page']), ('page_number', returned_args['page_number'])])
@@ -93,14 +89,15 @@ def generate_json_for_gui(response, max_query, user_args):
     # the input will be the dict of the response from api
     # the examples are a translation to a dic
     # this block parses the result,future fields added here
-    list_type = user_args['list_type']
-    list_resp=None
-    if list_type ==1:
-       list_resp= GuiQuery.watch_list_get(GuiQuery)
-    else:
-       list_resp= GuiQuery.ignore_list_get(GuiQuery)
+
+    list_resp= GuiQuery.ignore_list_get(GuiQuery)
     parsed_dic = {}
+    item_pos = "item1"
     for x in range(max_query):
+        # it return custom error
+        if isinstance( list_resp,Response):
+            list_resp = {'item1':{'itemId':'1111111111111111111'}}
+        else:
             item_pos = 'item'+str(((x)%(len(list_resp)))+1)
         if (list_resp[item_pos]['itemId'] == response[x]['itemId']) is False:
             parsed_dic[x] = {}
@@ -111,8 +108,7 @@ def generate_json_for_gui(response, max_query, user_args):
             parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",None)
             parsed_dic[x]['image_url'] = response[x].get("galleryURL", None)
             parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
-            print("worked !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------------------------")
-        else: print('faileds')
+        else: pass
     return jsonify(parsed_dic)
 
 
@@ -121,7 +117,7 @@ def check_if_resp_empty(response):
     if int(amount_of_products) > 0:
         return response["searchResult"]['item'], int(amount_of_products)
     else:
-        return custom_error(444, "No results found", "new_search"), 0
+        return custom_error(444, "No results found", "new_search")
 
 
 # Ebay Sdk Pratice
@@ -222,15 +218,17 @@ class GuiQuery(Resource):
             return custom_error(400, "item already exists", "no_action")
 
     def watch_list_get(self):
-        if watch_list.check_if_file_empty() is  False:
+        if watch_list.check_if_file_empty() is False:
             return watch_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
 
     def ignore_list_get(self):
         if ignore_list.check_if_file_empty() is False:
             return ignore_list.dump_list()
-        return custom_error(404, "the dic is empty", "display_empty")
-
+        print("ignore mate")
+        zz=custom_error(404, "the dic is empty", "display_empty")
+        print(zz.stat_code)
+        return zz
     def get(self):
         # get the requested element
         parse_result = parse_order66_get()
