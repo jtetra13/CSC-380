@@ -24,9 +24,8 @@ class Page1(Page):
         Page.__init__(self, *args, **kwargs)
         label = Label(self, text="About")
         label.place(relx=.5, rely=.00)
-        T2 = Text(self, height=3, width=50)
+        T2 = Label(self, text="This is the About page for this project")
         T2.place(relx=.5, rely=.5, anchor="center")
-        T2.insert(END, "This is the About page where a brief explanation\n of everyone who has worked on this project and\n what they did will be explained.")
 
 k = 0
 #path = os.getcwd()
@@ -173,7 +172,133 @@ class Page2(Page):
                 self.priceOf6.set(rget['item6']['price_no_shipping'])
                 self.titleOf6.set(rget['item6']['title'])
                 self.pic6.set(rget['item6']['image_url'])
-    def deleteFromList(self):
+    def iListNext(self):
+        global p
+        print(p)
+        num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/ignore_list.txt'))
+        p = (num_lines/7)
+        self.labelChange.set("Watchlist")
+        rget = requests.get("http://127.0.0.1:5000/order66?list_type=2").json()
+        print("Number of items in ignore list: " + str(n))
+        print("ignore list dict: " + json.dumps(rget))
+        print(n)
+        print(rget)
+        if(int(n) >= 7):
+            if(int(n)==7):
+                self.priceOf1.set(rget['item1']['price_no_shipping'])
+                self.titleOf1.set(rget['item1']['title'])
+                self.pic1.set(rget['item1']['image_url'])
+                self.priceOf2.set("")
+                self.titleOf2.set("")
+                self.pic2.set("")
+                self.priceOf3.set("")
+                self.titleOf3.set("")
+                self.pic3.set("")
+                self.priceOf4.set("")
+                self.titleOf4.set("")
+                self.pic4.set("")
+                self.priceOf5.set("")
+                self.titleOf5.set("")
+                self.pic5.set("")
+                self.priceOf6.set("")
+                self.titleOf6.set("")
+                self.pic6.set("")
+            if(int(n)==8):
+                self.priceOf1.set(rget['item1']['price_no_shipping'])
+                self.titleOf1.set(rget['item1']['title'])
+                self.pic1.set(rget['item1']['image_url'])
+                self.priceOf2.set(rget['item2']['price_no_shipping'])
+                self.titleOf2.set(rget['item2']['title'])
+                self.pic2.set(rget['item2']['image_url'])
+                self.priceOf3.set("")
+                self.titleOf3.set("")
+                self.pic3.set("")
+                self.priceOf4.set("")
+                self.titleOf4.set("")
+                self.pic4.set("")
+                self.priceOf5.set("")
+                self.titleOf5.set("")
+                self.pic5.set("")
+                self.priceOf6.set("")
+                self.titleOf6.set("")
+                self.pic6.set("")
+            if(int(n)==9):
+                self.priceOf1.set(rget['item1']['price_no_shipping'])
+                self.titleOf1.set(rget['item1']['title'])
+                self.pic1.set(rget['item1']['image_url'])
+                self.priceOf2.set(rget['item2']['price_no_shipping'])
+                self.titleOf2.set(rget['item2']['title'])
+                self.pic2.set(rget['item2']['image_url'])
+                self.priceOf3.set(rget['item3']['price_no_shipping'])
+                self.titleOf3.set(rget['item3']['title'])
+                self.pic3.set(rget['item3']['image_url'])
+                self.priceOf4.set("")
+                self.titleOf4.set("")
+                self.pic4.set("")
+                self.priceOf5.set("")
+                self.titleOf5.set("")
+                self.pic5.set("")
+                self.priceOf6.set("")
+                self.titleOf6.set("")
+                self.pic6.set("")
+            if(int(n)==10):
+                self.priceOf1.set(rget['item1']['price_no_shipping'])
+                self.titleOf1.set(rget['item1']['title'])
+                self.pic1.set(rget['item1']['image_url'])
+                self.priceOf2.set(rget['item2']['price_no_shipping'])
+                self.titleOf2.set(rget['item2']['title'])
+                self.pic2.set(rget['item2']['image_url'])
+                self.priceOf3.set(rget['item3']['price_no_shipping'])
+                self.titleOf3.set(rget['item3']['title'])
+                self.pic3.set(rget['item3']['image_url'])
+                self.priceOf4.set(rget['item4']['price_no_shipping'])
+                self.titleOf4.set(rget['item4']['title'])
+                self.pic4.set(rget['item4']['image_url'])
+                self.priceOf5.set("")
+                self.titleOf5.set("")
+                self.pic5.set("")
+                self.priceOf6.set("")
+                self.titleOf6.set("")
+                self.pic6.set("")
+            if(int(n)==11):
+                self.priceOf1.set(rget['item1']['price_no_shipping'])
+                self.titleOf1.set(rget['item1']['title'])
+                self.pic1.set(rget['item1']['image_url'])
+                self.priceOf2.set(rget['item2']['price_no_shipping'])
+                self.titleOf2.set(rget['item2']['title'])
+                self.pic2.set(rget['item2']['image_url'])
+                self.priceOf3.set(rget['item3']['price_no_shipping'])
+                self.titleOf3.set(rget['item3']['title'])
+                self.pic3.set(rget['item3']['image_url'])
+                self.priceOf4.set(rget['item4']['price_no_shipping'])
+                self.titleOf4.set(rget['item4']['title'])
+                self.pic4.set(rget['item4']['image_url'])
+                self.priceOf5.set(rget['item5']['price_no_shipping'])
+                self.titleOf5.set(rget['item5']['title'])
+                self.pic5.set(rget['item5']['image_url'])
+                self.priceOf6.set("")
+                self.titleOf6.set("")
+                self.pic6.set("")
+            if(int(n)>=12):
+                self.priceOf1.set(rget['item1']['price_no_shipping'])
+                self.titleOf1.set(rget['item1']['title'])
+                self.pic1.set(rget['item1']['image_url'])
+                self.priceOf2.set(rget['item2']['price_no_shipping'])
+                self.titleOf2.set(rget['item2']['title'])
+                self.pic2.set(rget['item2']['image_url'])
+                self.priceOf3.set(rget['item3']['price_no_shipping'])
+                self.titleOf3.set(rget['item3']['title'])
+                self.pic3.set(rget['item3']['image_url'])
+                self.priceOf4.set(rget['item4']['price_no_shipping'])
+                self.titleOf4.set(rget['item4']['title'])
+                self.pic4.set(rget['item4']['image_url'])
+                self.priceOf5.set(rget['item5']['price_no_shipping'])
+                self.titleOf5.set(rget['item5']['title'])
+                self.pic5.set(rget['item5']['image_url'])
+                self.priceOf6.set(rget['item6']['price_no_shipping'])
+                self.titleOf6.set(rget['item6']['title'])
+                self.pic6.set(rget['item6']['image_url'])
+    def deleteFromWList(self):
         global n
         num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
         n = (num_lines/7)
@@ -325,11 +450,10 @@ class Page2(Page):
             'image_url': firstImage,
             'list_type': str(1)
             }
-            print(data1)
+            print(1)
             rdelete1 = requests.delete("http://127.0.0.2:5000/order66?itemId="+firstID+
             "&title="+firstTitle+"&price="+firstPrice+"&shipping="+firstShipping+"&country="
             +firstCountry+"&image_url="+firstImage+"&list_type="+str(1))
-            print(rdelete1.json())
         if(self.var2.get()):
             data2 = {
             'itemId': secondID,
@@ -340,9 +464,10 @@ class Page2(Page):
             'image_url': secondImage,
             'list_type': str(1)
             }
-            rdelete2 =requests.delete("http://127.0.0.2:5000/order66?itemId="+firstID+
-            "&title="+firstTitle+"&price="+firstPrice+"&shipping="+firstShipping+"&country="
-            +firstCountry+"&image_url="+firstImage+"&list_type="+str(1))
+            print(2)
+            rdelete2 =requests.delete("http://127.0.0.2:5000/order66?itemId="+secondID+
+            "&title="+secondTitle+"&price="+secondPrice+"&shipping="+secondShipping+"&country="
+            +secondCountry+"&image_url="+secondImage+"&list_type="+str(1))
         if(self.var3.get()):
             data3 = {
             'itemId': thirdID,
@@ -353,9 +478,10 @@ class Page2(Page):
             'image_url': thirdImage,
             'list_type': str(1)
             }
-            rdelete3 =requests.delete("http://127.0.0.2:5000/order66?itemId="+firstID+
-            "&title="+firstTitle+"&price="+firstPrice+"&shipping="+firstShipping+"&country="
-            +firstCountry+"&image_url="+firstImage+"&list_type="+str(1))
+            print(3)
+            rdelete3 =requests.delete("http://127.0.0.2:5000/order66?itemId="+thirdID+
+            "&title="+thirdTitle+"&price="+thirdPrice+"&shipping="+thirdShipping+"&country="
+            +thirdCountry+"&image_url="+thirdImage+"&list_type="+str(1))
             print(rdelete3)
         if(self.var4.get()):
             data4 = {
@@ -367,10 +493,10 @@ class Page2(Page):
             'image_url': fourthImage,
             'list_type': str(1)
             }
-            rdelete4 =requests.delete("http://127.0.0.2:5000/order66?itemId="+firstID+
-            "&title="+firstTitle+"&price="+firstPrice+"&shipping="+firstShipping+"&country="
-            +firstCountry+"&image_url="+firstImage+"&list_type="+str(1))
-            print(rdelete4)
+            print(4)
+            rdelete4 =requests.delete("http://127.0.0.2:5000/order66?itemId="+fourthID+
+            "&title="+fourthTitle+"&price="+fourthPrice+"&shipping="+fourthShipping+"&country="
+            +fourthCountry+"&image_url="+fourthImage+"&list_type="+str(1))
         if(self.var5.get()):
             data5 = {
             'itemId': fifthID,
@@ -381,10 +507,10 @@ class Page2(Page):
             'image_url': fifthImage,
             'list_type': str(1)
             }
-            rdelete5 =requests.delete("http://127.0.0.2:5000/order66?itemId="+firstID+
-            "&title="+firstTitle+"&price="+firstPrice+"&shipping="+firstShipping+"&country="
-            +firstCountry+"&image_url="+firstImage+"&list_type="+str(1))
-            print(rdelete5)
+            print(5)
+            rdelete5 =requests.delete("http://127.0.0.2:5000/order66?itemId="+fifthID+
+            "&title="+fifthTitle+"&price="+fifthPrice+"&shipping="+fifthShipping+"&country="
+            +fifthCountry+"&image_url="+fifthImage+"&list_type="+str(1))
         if(self.var6.get()):
             data6 = {
             'itemId': sixthID,
@@ -395,10 +521,238 @@ class Page2(Page):
             'image_url': sixthImage,
             'list_type': str(1)
             }
-            rdelete6 =requests.delete("http://127.0.0.2:5000/order66?itemId="+firstID+
+            print(6)
+            rdelete6 =requests.delete("http://127.0.0.2:5000/order66?itemId="+sixthID+
+            "&title="+sixthTitle+"&price="+sixthPrice+"&shipping="+sixthShipping+"&country="
+            +sixthCountry+"&image_url="+sixthImage+"&list_type="+str(1))
+    def deleteFromIList(self):
+        global p
+        num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/ignore_list.txt'))
+        p = (num_lines/7)
+        print(p)
+        json_data = requests.get("http://127.0.0.2:5000/order66?list_type=2").json()
+        print(json_data)
+        if(p==1):
+            firstPrice = json_data['item1']['price_no_shipping']
+            firstTitle = json_data['item1']['title']
+            firstID = json_data['item1']['itemId']
+            firstShipping = json_data['item1']['price_shipping']
+            firstCountry = json_data['item1']['country']
+            firstImage = json_data['item1']['image_url']
+        if(p==2):
+            firstPrice = json_data['item1']['price_no_shipping']
+            firstTitle = json_data['item1']['title']
+            firstID = json_data['item1']['itemId']
+            firstShipping = json_data['item1']['price_shipping']
+            firstCountry = json_data['item1']['country']
+            firstImage = json_data['item1']['image_url']
+            secondPrice = json_data['item2']['price_no_shipping']
+            secondTitle = json_data['item2']['title']
+            secondID = json_data['item2']['itemId']
+            secondShipping = json_data['item2']['price_shipping']
+            secondCountry = json_data['item2']['country']
+            secondImage = json_data['item2']['image_url']
+        if(p==3):
+            firstPrice = json_data['item1']['price_no_shipping']
+            firstTitle = json_data['item1']['title']
+            firstID = json_data['item1']['itemId']
+            firstShipping = json_data['item1']['price_shipping']
+            firstCountry = json_data['item1']['country']
+            firstImage = json_data['item1']['image_url']
+            secondPrice = json_data['item2']['price_no_shipping']
+            secondTitle = json_data['item2']['title']
+            secondID = json_data['item2']['itemId']
+            secondShipping = json_data['item2']['price_shipping']
+            secondCountry = json_data['item2']['country']
+            secondImage = json_data['item2']['image_url']
+            thirdPrice = json_data['item3']['price_no_shipping']
+            thirdTitle = json_data['item3']['title']
+            thirdID = json_data['item3']['itemId']
+            thirdShipping = json_data['item3']['price_shipping']
+            thirdCountry = json_data['item3']['country']
+            thirdImage = json_data['item3']['image_url']
+        if(p==4):
+            firstPrice = json_data['item1']['price_no_shipping']
+            firstTitle = json_data['item1']['title']
+            firstID = json_data['item1']['itemId']
+            firstShipping = json_data['item1']['price_shipping']
+            firstCountry = json_data['item1']['country']
+            firstImage = json_data['item1']['image_url']
+            secondPrice = json_data['item2']['price_no_shipping']
+            secondTitle = json_data['item2']['title']
+            secondID = json_data['item2']['itemId']
+            secondShipping = json_data['item2']['price_shipping']
+            secondCountry = json_data['item2']['country']
+            secondImage = json_data['item2']['image_url']
+            #secondList = json_data['1']['list_type']
+            thirdPrice = json_data['item3']['price_no_shipping']
+            thirdTitle = json_data['item3']['title']
+            thirdID = json_data['item3']['itemId']
+            thirdShipping = json_data['item3']['price_shipping']
+            thirdCountry = json_data['item3']['country']
+            thirdImage = json_data['item3']['image_url']
+            #thirdList = json_data['2']['list_type']
+            fourthPrice = json_data['item4']['price_no_shipping']
+            fourthTitle = json_data['item4']['title']
+            fourthID = json_data['item4']['itemId']
+            fourthShipping = json_data['item4']['price_shipping']
+            fourthCountry = json_data['item4']['country']
+            fourthImage = json_data['item4']['image_url']
+        if(p==5):
+            secondPrice = json_data['item2']['price_no_shipping']
+            secondTitle = json_data['item2']['title']
+            secondID = json_data['item2']['itemId']
+            secondShipping = json_data['item2']['price_shipping']
+            secondCountry = json_data['item2']['country']
+            secondImage = json_data['item2']['image_url']
+            #secondList = json_data['1']['list_type']
+            thirdPrice = json_data['item3']['price_no_shipping']
+            thirdTitle = json_data['item3']['title']
+            thirdID = json_data['item3']['itemId']
+            thirdShipping = json_data['item3']['price_shipping']
+            thirdCountry = json_data['item3']['country']
+            thirdImage = json_data['item3']['image_url']
+            #thirdList = json_data['2']['list_type']
+            fourthPrice = json_data['item4']['price_no_shipping']
+            fourthTitle = json_data['item4']['title']
+            fourthID = json_data['item4']['itemId']
+            fourthShipping = json_data['item4']['price_shipping']
+            fourthCountry = json_data['item4']['country']
+            fourthImage = json_data['item4']['image_url']
+            fifthPrice = json_data['item5']['price_no_shipping']
+            fifthTitle = json_data['item5']['title']
+            fifthID = json_data['item5']['itemId']
+            fifthShipping = json_data['item5']['price_shipping']
+            fifthCountry = json_data['item5']['country']
+            fifthImage = json_data['item5']['image_url']
+        if(p>=6):
+            firstPrice = json_data['item1']['price_no_shipping']
+            firstTitle = json_data['item1']['title']
+            firstID = json_data['item1']['itemId']
+            firstShipping = json_data['item1']['price_shipping']
+            firstCountry = json_data['item1']['country']
+            firstImage = json_data['item1']['image_url']
+            #firstList = json_data['0']['list_type']
+            secondPrice = json_data['item2']['price_no_shipping']
+            secondTitle = json_data['item2']['title']
+            secondID = json_data['item2']['itemId']
+            secondShipping = json_data['item2']['price_shipping']
+            secondCountry = json_data['item2']['country']
+            secondImage = json_data['item2']['image_url']
+            #secondList = json_data['1']['list_type']
+            thirdPrice = json_data['item3']['price_no_shipping']
+            thirdTitle = json_data['item3']['title']
+            thirdID = json_data['item3']['itemId']
+            thirdShipping = json_data['item3']['price_shipping']
+            thirdCountry = json_data['item3']['country']
+            thirdImage = json_data['item3']['image_url']
+            #thirdList = json_data['2']['list_type']
+            fourthPrice = json_data['item4']['price_no_shipping']
+            fourthTitle = json_data['item4']['title']
+            fourthID = json_data['item4']['itemId']
+            fourthShipping = json_data['item4']['price_shipping']
+            fourthCountry = json_data['item4']['country']
+            fourthImage = json_data['item4']['image_url']
+            #fourthList = json_data['3']['list_type']
+            fifthPrice = json_data['item5']['price_no_shipping']
+            fifthTitle = json_data['item5']['title']
+            fifthID = json_data['item5']['itemId']
+            fifthShipping = json_data['item5']['price_shipping']
+            fifthCountry = json_data['item5']['country']
+            fifthImage = json_data['item5']['image_url']
+            #fifthList = json_data['4']['list_type']
+            sixthPrice = json_data['item6']['price_shipping']
+            sixthTitle = json_data['item6']['title']
+            sixthID = json_data['item6']['itemId']
+            sixthShipping = json_data['item6']['price_shipping']
+            sixthCountry = json_data['item6']['country']
+            sixthImage = json_data['item6']['image_url']
+            #sixthList = json_data['5']['list_type']
+        if(self.var1.get()):
+            data1 = {
+            'itemId': firstID,
+            'title': firstTitle,
+            'price': firstPrice,
+            'shipping': firstShipping,
+            'country': firstCountry,
+            'image_url': firstImage,
+            'list_type': str(2)
+            }
+            print(1)
+            rdelete1 = requests.delete("http://127.0.0.2:5000/order66?itemId="+firstID+
             "&title="+firstTitle+"&price="+firstPrice+"&shipping="+firstShipping+"&country="
-            +firstCountry+"&image_url="+firstImage+"&list_type="+str(1))
-            print(rdelete6.json())
+            +firstCountry+"&image_url="+firstImage+"&list_type="+str(2))
+        if(self.var2.get()):
+            data2 = {
+            'itemId': secondID,
+            'title': secondTitle,
+            'price': secondPrice,
+            'shipping': secondShipping,
+            'country': secondCountry,
+            'image_url': secondImage,
+            'list_type': str(2)
+            }
+            print(2)
+            rdelete2 =requests.delete("http://127.0.0.2:5000/order66?itemId="+secondID+
+            "&title="+secondTitle+"&price="+secondPrice+"&shipping="+secondShipping+"&country="
+            +secondCountry+"&image_url="+secondImage+"&list_type="+str(2))
+        if(self.var3.get()):
+            data3 = {
+            'itemId': thirdID,
+            'title': thirdTitle,
+            'price': thirdPrice,
+            'shipping': thirdShipping,
+            'country': thirdCountry,
+            'image_url': thirdImage,
+            'list_type': str(2)
+            }
+            print(3)
+            rdelete3 =requests.delete("http://127.0.0.2:5000/order66?itemId="+thirdID+
+            "&title="+thirdTitle+"&price="+thirdPrice+"&shipping="+thirdShipping+"&country="
+            +thirdCountry+"&image_url="+thirdImage+"&list_type="+str(2))
+            print(rdelete3)
+        if(self.var4.get()):
+            data4 = {
+            'itemId': fourthID,
+            'title': fourthTitle,
+            'price': fourthPrice,
+            'shipping': fourthShipping,
+            'country': fourthCountry,
+            'image_url': fourthImage,
+            'list_type': str(2)
+            }
+            print(4)
+            rdelete4 =requests.delete("http://127.0.0.2:5000/order66?itemId="+fourthID+
+            "&title="+fourthTitle+"&price="+fourthPrice+"&shipping="+fourthShipping+"&country="
+            +fourthCountry+"&image_url="+fourthImage+"&list_type="+str(2))
+        if(self.var5.get()):
+            data5 = {
+            'itemId': fifthID,
+            'title': fifthTitle,
+            'price': fifthPrice,
+            'shipping': fifthShipping,
+            'country': fifthCountry,
+            'image_url': fifthImage,
+            'list_type': str(2)
+            }
+            print(5)
+            rdelete5 =requests.delete("http://127.0.0.2:5000/order66?itemId="+fifthID+
+            "&title="+fifthTitle+"&price="+fifthPrice+"&shipping="+fifthShipping+"&country="
+            +fifthCountry+"&image_url="+fifthImage+"&list_type="+str(2))
+        if(self.var6.get()):
+            data6 = {
+            'itemId': sixthID,
+            'title': sixthTitle,
+            'price': sixthPrice,
+            'shipping': sixthShipping,
+            'country': sixthCountry,
+            'image_url': sixthImage,
+            'list_type': str(2)
+            }
+            print(6)
+            rdelete6 =requests.delete("http://127.0.0.2:5000/order66?itemId="+sixthID+
+            "&title="+sixthTitle+"&price="+sixthPrice+"&shipping="+sixthShipping+"&country="
+            +sixthCountry+"&image_url="+sixthImage+"&list_type="+str(2))
     def showWList(self):
         global n
         num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
@@ -410,6 +764,12 @@ class Page2(Page):
         self.listName4.set("Delete From List")
         self.listName5.set("Delete From List")
         self.listName6.set("Delete From List")
+        self.listName7.set("")
+        self.listName8.set("")
+        self.listName9.set("")
+        self.listName10.set("")
+        self.listName11.set("")
+        self.listName12.set("")
         rget = requests.get("http://127.0.0.2:5000/order66?list_type=1").json()
         print(n)
         print(rget)
@@ -528,6 +888,166 @@ class Page2(Page):
             self.titleOf6.set("")
             self.pic6.set("")
         if(int(n)>=6):
+            self.priceOf1.set(rget['item1']['price_no_shipping'])
+            self.titleOf1.set(rget['item1']['title'])
+            self.pic1.set(rget['item1']['image_url'])
+            self.priceOf2.set(rget['item2']['price_no_shipping'])
+            self.titleOf2.set(rget['item2']['title'])
+            self.pic2.set(rget['item2']['image_url'])
+            self.priceOf3.set(rget['item3']['price_no_shipping'])
+            self.titleOf3.set(rget['item3']['title'])
+            self.pic3.set(rget['item3']['image_url'])
+            self.priceOf4.set(rget['item4']['price_no_shipping'])
+            self.titleOf4.set(rget['item4']['title'])
+            self.pic4.set(rget['item4']['image_url'])
+            self.priceOf5.set(rget['item5']['price_no_shipping'])
+            self.titleOf5.set(rget['item5']['title'])
+            self.pic5.set(rget['item5']['image_url'])
+            self.priceOf6.set(rget['item6']['price_no_shipping'])
+            self.titleOf6.set(rget['item6']['title'])
+            self.pic6.set(rget['item6']['image_url'])
+        self.var1.set(0)
+        self.var2.set(0)
+        self.var3.set(0)
+        self.var4.set(0)
+        self.var5.set(0)
+        self.var6.set(0)
+
+    def showIList(self):
+        global p
+        num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/ignore_list.txt'))
+        p = (num_lines/7)
+        self.labelChange.set("Ignore list")
+        self.listName1.set("Delete From List")
+        self.listName2.set("Delete From List")
+        self.listName3.set("Delete From List")
+        self.listName4.set("Delete From List")
+        self.listName5.set("Delete From List")
+        self.listName6.set("Delete From List")
+        self.listName7.set("")
+        self.listName8.set("")
+        self.listName9.set("")
+        self.listName10.set("")
+        self.listName11.set("")
+        self.listName12.set("")
+        rget = requests.get("http://127.0.0.2:5000/order66?list_type=2").json()
+        print(p)
+        print(rget)
+        if(int(p)==0):
+            self.priceOf1.set("")
+            self.titleOf1.set("")
+            self.pic1.set("")
+            self.priceOf2.set("")
+            self.titleOf2.set("")
+            self.pic2.set("")
+            self.priceOf3.set("")
+            self.titleOf3.set("")
+            self.pic3.set("")
+            self.priceOf4.set("")
+            self.titleOf4.set("")
+            self.pic4.set("")
+            self.priceOf5.set("")
+            self.titleOf5.set("")
+            self.pic5.set("")
+            self.priceOf6.set("")
+            self.titleOf6.set("")
+            self.pic6.set("")
+        if(int(p)==1):
+            self.priceOf1.set(rget['item1']['price_no_shipping'])
+            self.titleOf1.set(rget['item1']['title'])
+            self.pic1.set(rget['item1']['image_url'])
+            self.priceOf2.set("")
+            self.titleOf2.set("")
+            self.pic2.set("")
+            self.priceOf3.set("")
+            self.titleOf3.set("")
+            self.pic3.set("")
+            self.priceOf4.set("")
+            self.titleOf4.set("")
+            self.pic4.set("")
+            self.priceOf5.set("")
+            self.titleOf5.set("")
+            self.pic5.set("")
+            self.priceOf6.set("")
+            self.titleOf6.set("")
+            self.pic6.set("")
+        if(int(p)==2):
+            self.priceOf1.set(rget['item1']['price_no_shipping'])
+            self.titleOf1.set(rget['item1']['title'])
+            self.pic1.set(rget['item1']['image_url'])
+            self.priceOf2.set(rget['item2']['price_no_shipping'])
+            self.titleOf2.set(rget['item2']['title'])
+            self.pic2.set(rget['item2']['image_url'])
+            self.priceOf3.set("")
+            self.titleOf3.set("")
+            self.pic3.set("")
+            self.priceOf4.set("")
+            self.titleOf4.set("")
+            self.pic4.set("")
+            self.priceOf5.set("")
+            self.titleOf5.set("")
+            self.pic5.set("")
+            self.priceOf6.set("")
+            self.titleOf6.set("")
+            self.pic6.set("")
+        if(int(p)==3):
+            self.priceOf1.set(rget['item1']['price_no_shipping'])
+            self.titleOf1.set(rget['item1']['title'])
+            self.pic1.set(rget['item1']['image_url'])
+            self.priceOf2.set(rget['item2']['price_no_shipping'])
+            self.titleOf2.set(rget['item2']['title'])
+            self.pic2.set(rget['item2']['image_url'])
+            self.priceOf3.set(rget['item3']['price_no_shipping'])
+            self.titleOf3.set(rget['item3']['title'])
+            self.pic3.set(rget['item3']['image_url'])
+            self.priceOf4.set("")
+            self.titleOf4.set("")
+            self.pic4.set("")
+            self.priceOf5.set("")
+            self.titleOf5.set("")
+            self.pic5.set("")
+            self.priceOf6.set("")
+            self.titleOf6.set("")
+            self.pic6.set("")
+        if(int(p)==4):
+            self.priceOf1.set(rget['item1']['price_no_shipping'])
+            self.titleOf1.set(rget['item1']['title'])
+            self.pic1.set(rget['item1']['image_url'])
+            self.priceOf2.set(rget['item2']['price_no_shipping'])
+            self.titleOf2.set(rget['item2']['title'])
+            self.pic2.set(rget['item2']['image_url'])
+            self.priceOf3.set(rget['item3']['price_no_shipping'])
+            self.titleOf3.set(rget['item3']['title'])
+            self.pic3.set(rget['item3']['image_url'])
+            self.priceOf4.set(rget['item4']['price_no_shipping'])
+            self.titleOf4.set(rget['item4']['title'])
+            self.pic4.set(rget['item4']['image_url'])
+            self.priceOf5.set("")
+            self.titleOf5.set("")
+            self.pic5.set("")
+            self.priceOf6.set("")
+            self.titleOf6.set("")
+            self.pic6.set("")
+        if(int(p)==5):
+            self.priceOf1.set(rget['item1']['price_no_shipping'])
+            self.titleOf1.set(rget['item1']['title'])
+            self.pic1.set(rget['item1']['image_url'])
+            self.priceOf2.set(rget['item2']['price_no_shipping'])
+            self.titleOf2.set(rget['item2']['title'])
+            self.pic2.set(rget['item2']['image_url'])
+            self.priceOf3.set(rget['item3']['price_no_shipping'])
+            self.titleOf3.set(rget['item3']['title'])
+            self.pic3.set(rget['item3']['image_url'])
+            self.priceOf4.set(rget['item4']['price_no_shipping'])
+            self.titleOf4.set(rget['item4']['title'])
+            self.pic4.set(rget['item4']['image_url'])
+            self.priceOf5.set(rget['item5']['price_no_shipping'])
+            self.titleOf5.set(rget['item5']['title'])
+            self.pic5.set(rget['item5']['image_url'])
+            self.priceOf6.set("")
+            self.titleOf6.set("")
+            self.pic6.set("")
+        if(int(p)>=6):
             self.priceOf1.set(rget['item1']['price_no_shipping'])
             self.titleOf1.set(rget['item1']['title'])
             self.pic1.set(rget['item1']['image_url'])
@@ -679,8 +1199,105 @@ class Page2(Page):
             }
             rput6 =requests.put("http://127.0.0.2:5000/order66",data6)
             print(rput6)
+        if(self.var7.get()):
+            data7 = {
+            'itemId': firstID,
+            'title': firstTitle,
+            'price': firstPrice,
+            'shipping': firstShipping,
+            'country': firstCountry,
+            'image_url': firstImage,
+            'list_type': 2
+            }
+            print(7)
+            rput7 =requests.put("http://127.0.0.2:5000/order66",data7)
+            print(rput7)
+        if(self.var8.get()):
+            data8 = {
+            'itemId': secondID,
+            'title': secondTitle,
+            'price': secondPrice,
+            'shipping': secondShipping,
+            'country': secondCountry,
+            'image_url': secondImage,
+            'list_type': 2
+            }
+            rput8 =requests.put("http://127.0.0.2:5000/order66",data8)
+            print(rput8)
+        if(self.var9.get()):
+            data9 = {
+            'itemId': thirdID,
+            'title': thirdTitle,
+            'price': thirdPrice,
+            'shipping': thirdShipping,
+            'country': thirdCountry,
+            'image_url': thirdImage,
+            'list_type': 2
+            }
+            rput9 =requests.put("http://127.0.0.2:5000/order66",data9)
+            print(rput9)
+        if(self.var10.get()):
+            data10 = {
+            'itemId': fourthID,
+            'title': fourthTitle,
+            'price': fourthPrice,
+            'shipping': fourthShipping,
+            'country': fourthCountry,
+            'image_url': fourthImage,
+            'list_type': 2
+            }
+            rput10 =requests.put("http://127.0.0.2:5000/order66",data10)
+            print(rput10)
+        if(self.var11.get()):
+            data11 = {
+            'itemId': fifthID,
+            'title': fifthTitle,
+            'price': fifthPrice,
+            'shipping': fifthShipping,
+            'country': fifthCountry,
+            'image_url': fifthImage,
+            'list_type': 2
+            }
+            rput11 =requests.put("http://127.0.0.2:5000/order66",data11)
+            print(rput11)
+        if(self.var12.get()):
+            data12 = {
+            'itemId': sixthID,
+            'title': sixthTitle,
+            'price': sixthPrice,
+            'shipping': sixthShipping,
+            'country': sixthCountry,
+            'image_url': sixthImage,
+            'list_type': 2
+            }
+            rput12 =requests.put("http://127.0.0.2:5000/order66",data12)
+            print(rput12)
+        self.var1.set(0)
+        self.var2.set(0)
+        self.var3.set(0)
+        self.var4.set(0)
+        self.var5.set(0)
+        self.var6.set(0)
+        self.var7.set(0)
+        self.var8.set(0)
+        self.var9.set(0)
+        self.var10.set(0)
+        self.var11.set(0)
+        self.var12.set(0)
     def search(self):
         self.labelChange.set("Search")
+        self.listName1.set("Watch List")
+        self.listName2.set("Watch List")
+        self.listName3.set("Watch List")
+        self.listName4.set("Watch List")
+        self.listName5.set("Watch List")
+        self.listName6.set("Watch List")
+        self.listName7.set("Ignore List")
+        self.listName8.set("Ignore List")
+        self.listName9.set("Ignore List")
+        self.listName10.set("Ignore List")
+        self.listName11.set("Ignore List")
+        self.listName12.set("Ignore List")
         self.var1.set(0)
         self.var2.set(0)
         self.var3.set(0)
@@ -908,30 +1525,48 @@ class Page2(Page):
         self.listName5.set("Watch List")
         self.listName6.set("Watch List")
         box1 = Checkbutton(canvas, text="Watch list", variable=self.var1, textvariable=self.listName1)
-        canvas.create_window(350, 380, window=box1)
+        canvas.create_window(300, 380, window=box1)
         box2 = Checkbutton(canvas, text="Watch list", variable=self.var2, textvariable=self.listName2)
-        canvas.create_window(350, 580, window=box2)
+        canvas.create_window(300, 580, window=box2)
         box3 = Checkbutton(canvas, text="Watch list", variable=self.var3, textvariable=self.listName3)
-        canvas.create_window(350, 780, window=box3)
+        canvas.create_window(300, 780, window=box3)
         box4 = Checkbutton(canvas, text="Watch list", variable=self.var4, textvariable=self.listName4)
-        canvas.create_window(350, 980, window=box4)
+        canvas.create_window(300, 980, window=box4)
         box5 = Checkbutton(canvas, text="Watch list", variable=self.var5, textvariable=self.listName5)
-        canvas.create_window(350, 1180, window=box5)
+        canvas.create_window(300, 1180, window=box5)
         box6 = Checkbutton(canvas, text="Watch list", variable=self.var6, textvariable=self.listName6)
-        canvas.create_window(350, 1380, window=box6)
+        canvas.create_window(300, 1380, window=box6)
         #Ignore list check box
-        box7 = Checkbutton(canvas, text="Ignore list")
-        canvas.create_window(350, 400, window=box7)
-        box8 = Checkbutton(canvas, text="Ignore list")
-        canvas.create_window(350, 600, window=box8)
-        box9 = Checkbutton(canvas, text="Ignore list")
-        canvas.create_window(350, 800, window=box9)
-        box10 = Checkbutton(canvas, text="Ignore list")
-        canvas.create_window(350, 1000, window=box10)
-        box11 = Checkbutton(canvas, text="Ignore list")
-        canvas.create_window(350, 1200, window=box11)
-        box12 = Checkbutton(canvas, text="Ignore list")
-        canvas.create_window(350, 1400, window=box12)
+        self.var7 = IntVar()
+        self.var8 = IntVar()
+        self.var9 = IntVar()
+        self.var10 = IntVar()
+        self.var11 = IntVar()
+        self.var12 = IntVar()
+        self.listName7=StringVar()
+        self.listName8=StringVar()
+        self.listName9=StringVar()
+        self.listName10=StringVar()
+        self.listName11=StringVar()
+        self.listName12=StringVar()
+        self.listName7.set("Ignore List")
+        self.listName8.set("Ignore List")
+        self.listName9.set("Ignore List")
+        self.listName10.set("Ignore List")
+        self.listName11.set("Ignore List")
+        self.listName12.set("Ignore List")
+        box7 = Checkbutton(canvas, text="Ignore list", variable=self.var7, textvariable=self.listName7)
+        canvas.create_window(300, 400, window=box7)
+        box8 = Checkbutton(canvas, text="Ignore list", variable=self.var8, textvariable=self.listName8)
+        canvas.create_window(300, 600, window=box8)
+        box9 = Checkbutton(canvas, text="Ignore list", variable=self.var9, textvariable=self.listName9)
+        canvas.create_window(300, 800, window=box9)
+        box10 = Checkbutton(canvas, text="Ignore list", variable=self.var10, textvariable=self.listName10)
+        canvas.create_window(300, 1000, window=box10)
+        box11 = Checkbutton(canvas, text="Ignore list", variable=self.var11, textvariable=self.listName11)
+        canvas.create_window(300, 1200, window=box11)
+        box12 = Checkbutton(canvas, text="Ignore list", variable=self.var12, textvariable=self.listName12)
+        canvas.create_window(300, 1400, window=box12)
         #Search bar
         search1 = StringVar()
         self.mEntry = Entry(self, width=30)
@@ -943,20 +1578,27 @@ class Page2(Page):
         canvas.create_window(700, 1500, window=nextPage)
         wListNextPage = Button(canvas, text="Watch List Next Page", command=self.wListNext)
         canvas.create_window(800, 1550, window=wListNextPage)
+        iListNextPage = Button(canvas, text="Ignore List Next Page", command=self.iListNext)
+        canvas.create_window(800, 1600, window=iListNextPage)
         #Previous Page button
         prevPage = Button(canvas, text="Previous Page", command=prev)
         canvas.create_window(600, 1500, window=prevPage)
         wListprevPage = Button(canvas, text="Watch List Previous Page", command=self.showWList)
         canvas.create_window(600, 1550, window=wListprevPage)
+        iListprevPage = Button(canvas, text="Ignore List Previous Page", command=self.showIList)
+        canvas.create_window(600, 1600, window=iListprevPage)
         #Show Ignore list
-        showIgnore = Button(canvas, text="Show Watch List", command=self.showWList)
-        canvas.create_window(800, 1500, window=showIgnore)
+        showWatch = Button(canvas, text="Show Watch List", command=self.showWList)
+        canvas.create_window(800, 1500, window=showWatch)
+        showIgnore = Button(canvas, text="Show Ignore List", command=self.showIList)
+        canvas.create_window(900, 1500, window=showIgnore)
         #Delete From List
-        deleteFrom = Button(canvas, text="Delete From List", command=self.deleteFromList)
-        canvas.create_window(500, 1500, window=deleteFrom)
+        deleteFromWatch = Button(canvas, text="Delete From Watch List", command=self.deleteFromWList)
+        canvas.create_window(450, 1500, window=deleteFromWatch)
+
+        deleteFromIgnore = Button(canvas, text="Delete From Ignore List", command=self.deleteFromIList)
+        canvas.create_window(450, 1550, window=deleteFromIgnore)
         #Picture Button
-        def showImage():
-            self.pic1.set()
         self.pic1 = StringVar()
         self.pic2 = StringVar()
         self.pic3 = StringVar()
@@ -971,22 +1613,22 @@ class Page2(Page):
         self.pic6.set("Show Picture")
         showPicture1 = Button(canvas, text="Show Picture", textvariable=str(self.pic1))
         showPicture1.bind("<Button-1>", self.callPic)
-        canvas.create_window(100, 350, window=showPicture1)
+        canvas.create_window(300, 350, window=showPicture1)
         showPicture2 = Button(canvas, text="Show Picture", textvariable=str(self.pic2))
         showPicture2.bind("<Button-1>", self.callPic)
-        canvas.create_window(100, 550, window=showPicture2)
+        canvas.create_window(300, 550, window=showPicture2)
         showPicture3 = Button(canvas, text="Show Picture", textvariable=str(self.pic3))
         showPicture3.bind("<Button-1>", self.callPic)
-        canvas.create_window(100, 750, window=showPicture3)
+        canvas.create_window(300, 750, window=showPicture3)
         showPicture4 = Button(canvas, text="Show Picture", textvariable=str(self.pic4))
         showPicture4.bind("<Button-1>", self.callPic)
-        canvas.create_window(100, 950, window=showPicture4)
+        canvas.create_window(300, 950, window=showPicture4)
         showPicture5 = Button(canvas, text="Show Picture", textvariable=str(self.pic5))
         showPicture5.bind("<Button-1>", self.callPic)
-        canvas.create_window(100, 1150, window=showPicture5)
+        canvas.create_window(300, 1150, window=showPicture5)
         showPicture6 = Button(canvas, text="Show Picture", textvariable=str(self.pic6))
         showPicture6.bind("<Button-1>", self.callPic)
-        canvas.create_window(100, 1350, window=showPicture6)
+        canvas.create_window(300, 1350, window=showPicture6)
         #Update list
         getNum = Button(canvas, text="Update List", command=self.addToWList)
         canvas.create_window(200, 1500, window=getNum)
