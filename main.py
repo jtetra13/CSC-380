@@ -5,7 +5,7 @@ import WatchList, IgnoreList
 
 app = Flask(__name__)
 api = Api(app)
-watch_list = WatchList.watchList()
+watch_list = WatchList.WatchList()
 ignore_list = IgnoreList.IgnoreList()
 # this parser is going to be depreciated but limiting additional dependecies
 parser = reqparse.RequestParser()
@@ -159,7 +159,7 @@ class GuiQuery(Resource):
             return custom_error(404, "the watchlist is empty. This action isnt legal", "display_empty")
 
     def ignore_list_delete(self, parse_res):
-        if ignore_list.check_if_empty():
+        if ignore_list.check_if_file_empty() is not True:
             reznov = ignore_list.delete_item(parse_res)
             if reznov is True:
                 return 200
@@ -211,12 +211,12 @@ class GuiQuery(Resource):
             return custom_error(400, "item already exists", "no_action")
 
     def watch_list_get(self):
-        if watch_list.check_if_file_empty() is False:
+        if watch_list.check_if_file_empty() is  False:
             return watch_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
 
     def ignore_list_get(self):
-        if ignore_list.check_if_empty is False:
+        if ignore_list.check_if_file_empty() is False:
             return ignore_list.dump_list()
         return custom_error(404, "the dic is empty", "display_empty")
 

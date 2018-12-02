@@ -1,15 +1,15 @@
 import fileinput
 
 class LocalFile:
-    def init_file(self):
-        f = open('watch_list.txt', 'a+')
+    def init_file(self,file_name):
+        f = open(file_name, 'a+')
         f.close()
 
-    def add(self,input_dict):
-        if input_dict.get('itemId') in open('watch_list.txt').read():
-            raise Exception('Item already exists in file') 
+    def add(self,input_dict,file_name):
+        if input_dict.get('itemId') in open(file_name).read():
+            return False
  
-        f = open('watch_list.txt', 'a+')
+        f = open(file_name, 'a+')
         index = 5
         for key in input_dict:
             if index % 5 == 0:
@@ -22,12 +22,13 @@ class LocalFile:
                 else:
                     f.write(str(key) + ',' + str(input_dict[key]) + '\n')
         f.close()
+        return True
 
-    def delete(self,itemId):
-        watch_list = self.dump_dict()
+    def delete(self,itemId,file_name):
+        watch_list = self.dump_dict(file_name)
 
         try:
-            f = fileinput.input('watch_list.txt', inplace=True)
+            f = fileinput.input(file_name, inplace=True)
 
             for line in f:
                 if "itemId," + itemId in line:
@@ -39,10 +40,15 @@ class LocalFile:
         except IOError as e:
             print('File does not exist, cannot delete item. \n')
 
-        
-    def dump_dict(self):
+    def check_item_exist(self,itemId,file_name):
+        res = self.dump_dict(file_name)
+        if itemId in res:
+            return True
+        else: return False
+
+    def dump_dict(self,file_name):
         try:
-            f = fileinput.input('watch_list.txt')
+            f = fileinput.input(file_name)
             watch_list = dict()
             inner_dict = dict()
             
@@ -69,7 +75,7 @@ class LocalFile:
 
             return watch_list
         except IOError as e:
-            print('File does not exist, no items in the watchlist. \n')
+            return False
 
 #debugging
 #lf = LocalFile()
