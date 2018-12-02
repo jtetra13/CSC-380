@@ -25,6 +25,7 @@ gui_parser.add_argument('list_type', type=int)
 parser.add_argument('search_param', action='append', required=True)  # user string
 parser.add_argument('items_per_page', type=int, required=True)
 parser.add_argument('page_number', type=int, required=True)
+parser.add_argument('list_type',type=int)
 
 
 def custom_error(stat_code, msg, action):
@@ -58,6 +59,7 @@ def gen_custom_search(user_param, ):
 def parse_params_api_search():
     dikta = dict()
     returned_args = parser.parse_args()
+    dikta['list_type'] = returned_args['list_type']
     dikta['search_terms'] = ''.join(returned_args['search_param'])
     dikta['pages'] = dict(
         [('entries_per_page', returned_args['items_per_page']), ('page_number', returned_args['page_number'])])
@@ -91,17 +93,26 @@ def generate_json_for_gui(response, max_query, user_args):
     # the input will be the dict of the response from api
     # the examples are a translation to a dic
     # this block parses the result,future fields added here
+    list_type = user_args['list_type']
+    list_resp=None
+    if list_type ==1:
+       list_resp= GuiQuery.watch_list_get(GuiQuery)
+    else:
+       list_resp= GuiQuery.ignore_list_get(GuiQuery)
     parsed_dic = {}
     for x in range(max_query):
-        parsed_dic[x] = {}
-        parsed_dic[x]['country'] = response[x].get("country", None)
-        parsed_dic[x]['user_args'] = user_args
-        parsed_dic[x]['itemId'] = response[x].get("itemId", None)
-        parsed_dic[x]["title"] = response[x].get("title", None)
-        parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",
-                                                                                                               None)
-        parsed_dic[x]['image_url'] = response[x].get("galleryURL", None)
-        parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
+            item_pos = 'item'+str(((x)%(len(list_resp)))+1)
+        if (list_resp[item_pos]['itemId'] == response[x]['itemId']) is False:
+            parsed_dic[x] = {}
+            parsed_dic[x]['country'] = response[x].get("country", None)
+            parsed_dic[x]['user_args'] = user_args
+            parsed_dic[x]['itemId'] = response[x].get("itemId", None)
+            parsed_dic[x]["title"] = response[x].get("title", None)
+            parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",None)
+            parsed_dic[x]['image_url'] = response[x].get("galleryURL", None)
+            parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
+            print("worked !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------------------------")
+        else: print('faileds')
     return jsonify(parsed_dic)
 
 
