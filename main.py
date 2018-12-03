@@ -26,6 +26,7 @@ parser.add_argument('search_param', action='append', required=True)  # user stri
 parser.add_argument('items_per_page', type=int, required=True)
 parser.add_argument('page_number', type=int, required=True)
 
+
 def custom_error(stat_code, msg, action):
     error_msg = jsonify({
         'status': stat_code,
@@ -34,6 +35,7 @@ def custom_error(stat_code, msg, action):
     })
     error_msg.stat_code = stat_code  # this way we can reference it
     return error_msg
+
 
 def gen_custom_search(user_param, ):
     # user_param will be a dict
@@ -90,34 +92,41 @@ def generate_json_for_gui(response, max_query, user_args):
     # the examples are a translation to a dic
     # this block parses the result,future fields added here
 
-    list_resp= GuiQuery.ignore_list_get(GuiQuery)
+    ignore_resp = GuiQuery.ignore_list_get(GuiQuery)
     parsed_dic = {}
-    item_pos = "item1"
+    setty =None
+    if isinstance(ignore_resp, Response):
+            ignore_resp = {'item1': {'itemId': '1111111111111111111'}}
+            setty = {ignore_resp['item1']['itemId']}
+    else:
+        ignore_list_tmp =ignore_resp.values()
+        setty = {x['itemId'] for x in ignore_list_tmp}
+    count=0
     for x in range(max_query):
-        # it return custom error
-        if isinstance( list_resp,Response):
-            list_resp = {'item1':{'itemId':'1111111111111111111'}}
+        if setty.__contains__(response[x]['itemId']) is False:
+        #if (ignore_resp[item_pos]['itemId'] == response[x]['itemId']) is False:
+            parsed_dic[count] = {}
+            parsed_dic[count]['country'] = response[x].get("country", None)
+            parsed_dic[count]['user_args'] = user_args
+            parsed_dic[count]['itemId'] = response[x].get("itemId", None)
+            parsed_dic[count]["title"] = response[x].get("title", None)
+            parsed_dic[count]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get(
+                "value", None)
+            parsed_dic[count]['image_url'] = response[x].get("galleryURL", None)
+            parsed_dic[count]["shippingCost"] = response[x].get("shippingInfo", None)
+            count+=1
         else:
-            item_pos = 'item'+str(((x)%(len(list_resp)))+1)
-        if (list_resp[item_pos]['itemId'] == response[x]['itemId']) is False:
-            parsed_dic[x] = {}
-            parsed_dic[x]['country'] = response[x].get("country", None)
-            parsed_dic[x]['user_args'] = user_args
-            parsed_dic[x]['itemId'] = response[x].get("itemId", None)
-            parsed_dic[x]["title"] = response[x].get("title", None)
-            parsed_dic[x]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get("value",None)
-            parsed_dic[x]['image_url'] = response[x].get("galleryURL", None)
-            parsed_dic[x]["shippingCost"] = response[x].get("shippingInfo", None)
-        else: pass
+            pass
     return jsonify(parsed_dic)
 
 
 def check_if_resp_empty(response):
     amount_of_products = response["searchResult"]["_count"]
+    print(response['searchResult'])
     if int(amount_of_products) > 0:
         return response["searchResult"]['item'], int(amount_of_products)
     else:
-        return custom_error(444, "No results found", "new_search")
+        return custom_error(444, "No results found", "new_search"),0
 
 
 # Ebay Sdk Pratice
@@ -134,20 +143,10 @@ class EbayTesting(Resource):
         # sandbox had some issues returning a response with no entries
         ebay_response, count = check_if_resp_empty(ebay_response)
 
-        parse_result = parse_order66_get()
-        
-        # this works but still needs to be implemented
-        #il = IgnoreList.IgnoreList()
-        #if not il.check_if_empty:
-        #    ignore_list = {}
-        #    gq = GuiQuery()
-        #    GuiQuery.ignore_list_get(gq)
-        #    ignore_list = gq.ignore_list_get()
-        
-        
         if isinstance(ebay_response, Response):
             return ebay_response
         else:
+            #print(ebay_response, ".....///////")
             return generate_json_for_gui(ebay_response, count, user_param)  # custom_search does have the dict
 
 
@@ -226,9 +225,10 @@ class GuiQuery(Resource):
         if ignore_list.check_if_file_empty() is False:
             return ignore_list.dump_list()
         print("ignore mate")
-        zz=custom_error(404, "the dic is empty", "display_empty")
+        zz = custom_error(404, "the dic is empty", "display_empty")
         print(zz.stat_code)
         return zz
+
     def get(self):
         # get the requested element
         parse_result = parse_order66_get()
