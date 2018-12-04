@@ -76,6 +76,7 @@ def parse_params_gui_query():
     nikta = dict()
     ret_args = gui_parser.parse_args()
     nikta['itemId'] = ret_args['itemId']
+    nikta['url']=ret_args['viewItemURL']
     nikta['title'] = ret_args['title']
     nikta['price'] = dict([('price_no_shipping', ret_args['price']), ('price_shipping', ret_args['shipping'])])
     nikta['country'] = ret_args['country']
@@ -91,7 +92,6 @@ def generate_json_for_gui(response, max_query, user_args):
     # the input will be the dict of the response from api
     # the examples are a translation to a dic
     # this block parses the result,future fields added here
-
     ignore_resp = GuiQuery.ignore_list_get(GuiQuery)
     parsed_dic = {}
     setty =None
@@ -104,11 +104,11 @@ def generate_json_for_gui(response, max_query, user_args):
     count=0
     for x in range(max_query):
         if setty.__contains__(response[x]['itemId']) is False:
-        #if (ignore_resp[item_pos]['itemId'] == response[x]['itemId']) is False:
             parsed_dic[count] = {}
             parsed_dic[count]['country'] = response[x].get("country", None)
             parsed_dic[count]['user_args'] = user_args
             parsed_dic[count]['itemId'] = response[x].get("itemId", None)
+            parsed_dic[count]['url']=response[x].get('viewItemURL',None)
             parsed_dic[count]["title"] = response[x].get("title", None)
             parsed_dic[count]["price"] = response[x].get("sellingStatus", None).get("convertedCurrentPrice", None).get(
                 "value", None)
@@ -146,7 +146,6 @@ class EbayTesting(Resource):
         if isinstance(ebay_response, Response):
             return ebay_response
         else:
-            #print(ebay_response, ".....///////")
             return generate_json_for_gui(ebay_response, count, user_param)  # custom_search does have the dict
 
 
@@ -210,7 +209,7 @@ class GuiQuery(Resource):
         elif parse_result['list_type'] == 2:
             resp = self.ignore_list_put(parse_result)
         else:
-            return custom_error(400, "item already exists", "no_action")
+            return custom_error(400, "no list picked", "no_action")
         if resp is not False:
             return resp
         else:
