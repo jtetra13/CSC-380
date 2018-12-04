@@ -3,11 +3,8 @@ import webbrowser
 import requests
 import json
 import array as arr
-import cv2
 import urllib.request
 import os
-from io import BytesIO
-from time import sleep
 from PIL import Image, ImageTk
 
 def callback(event):
@@ -59,9 +56,9 @@ class Page2(Page):
         print(rget)
         if(int(n) >= 7):
             if(int(n)==7):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
                 self.priceOf2.set("")
                 self.titleOf2.set("")
                 self.pic2.set("")
@@ -78,12 +75,12 @@ class Page2(Page):
                 self.titleOf6.set("")
                 self.pic6.set("")
             if(int(n)==8):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
                 self.priceOf3.set("")
                 self.titleOf3.set("")
                 self.pic3.set("")
@@ -97,15 +94,15 @@ class Page2(Page):
                 self.titleOf6.set("")
                 self.pic6.set("")
             if(int(n)==9):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
                 self.priceOf4.set("")
                 self.titleOf4.set("")
                 self.pic4.set("")
@@ -116,18 +113,18 @@ class Page2(Page):
                 self.titleOf6.set("")
                 self.pic6.set("")
             if(int(n)==10):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
-                self.priceOf4.set(rget['item4']['price_no_shipping'])
-                self.titleOf4.set(rget['item4']['title'])
-                self.pic4.set(rget['item4']['image_url'])
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
+                self.priceOf4.set(rget['item10']['price_no_shipping'])
+                self.titleOf4.set(rget['item10']['title'])
+                self.pic4.set(rget['item10']['image_url'])
                 self.priceOf5.set("")
                 self.titleOf5.set("")
                 self.pic5.set("")
@@ -135,59 +132,59 @@ class Page2(Page):
                 self.titleOf6.set("")
                 self.pic6.set("")
             if(int(n)==11):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
-                self.priceOf4.set(rget['item4']['price_no_shipping'])
-                self.titleOf4.set(rget['item4']['title'])
-                self.pic4.set(rget['item4']['image_url'])
-                self.priceOf5.set(rget['item5']['price_no_shipping'])
-                self.titleOf5.set(rget['item5']['title'])
-                self.pic5.set(rget['item5']['image_url'])
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
+                self.priceOf4.set(rget['item10']['price_no_shipping'])
+                self.titleOf4.set(rget['item10']['title'])
+                self.pic4.set(rget['item10']['image_url'])
+                self.priceOf5.set(rget['item11']['price_no_shipping'])
+                self.titleOf5.set(rget['item11']['title'])
+                self.pic5.set(rget['item11']['image_url'])
                 self.priceOf6.set("")
                 self.titleOf6.set("")
                 self.pic6.set("")
             if(int(n)>=12):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
-                self.priceOf4.set(rget['item4']['price_no_shipping'])
-                self.titleOf4.set(rget['item4']['title'])
-                self.pic4.set(rget['item4']['image_url'])
-                self.priceOf5.set(rget['item5']['price_no_shipping'])
-                self.titleOf5.set(rget['item5']['title'])
-                self.pic5.set(rget['item5']['image_url'])
-                self.priceOf6.set(rget['item6']['price_no_shipping'])
-                self.titleOf6.set(rget['item6']['title'])
-                self.pic6.set(rget['item6']['image_url'])
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
+                self.priceOf4.set(rget['item10']['price_no_shipping'])
+                self.titleOf4.set(rget['item10']['title'])
+                self.pic4.set(rget['item10']['image_url'])
+                self.priceOf5.set(rget['item11']['price_no_shipping'])
+                self.titleOf5.set(rget['item11']['title'])
+                self.pic5.set(rget['item11']['image_url'])
+                self.priceOf6.set(rget['item12']['price_no_shipping'])
+                self.titleOf6.set(rget['item12']['title'])
+                self.pic6.set(rget['item12']['image_url'])
     def iListNext(self):
         global p
         print(p)
         num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/ignore_list.txt'))
         p = (num_lines/7)
-        self.labelChange.set("Watchlist")
+        self.labelChange.set("Ignore List")
         rget = requests.get("http://127.0.0.1:5000/order66?list_type=2").json()
         print("Number of items in ignore list: " + str(n))
         print("ignore list dict: " + json.dumps(rget))
-        print(n)
+        print(p)
         print(rget)
-        if(int(n) >= 7):
-            if(int(n)==7):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
+        if(int(p) >= 7):
+            if(int(p)==7):
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
                 self.priceOf2.set("")
                 self.titleOf2.set("")
                 self.pic2.set("")
@@ -203,13 +200,13 @@ class Page2(Page):
                 self.priceOf6.set("")
                 self.titleOf6.set("")
                 self.pic6.set("")
-            if(int(n)==8):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
+            if(int(p)==8):
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
                 self.priceOf3.set("")
                 self.titleOf3.set("")
                 self.pic3.set("")
@@ -222,16 +219,16 @@ class Page2(Page):
                 self.priceOf6.set("")
                 self.titleOf6.set("")
                 self.pic6.set("")
-            if(int(n)==9):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
+            if(int(p)==9):
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
                 self.priceOf4.set("")
                 self.titleOf4.set("")
                 self.pic4.set("")
@@ -241,63 +238,63 @@ class Page2(Page):
                 self.priceOf6.set("")
                 self.titleOf6.set("")
                 self.pic6.set("")
-            if(int(n)==10):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
-                self.priceOf4.set(rget['item4']['price_no_shipping'])
-                self.titleOf4.set(rget['item4']['title'])
-                self.pic4.set(rget['item4']['image_url'])
+            if(int(p)==10):
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
+                self.priceOf4.set(rget['item10']['price_no_shipping'])
+                self.titleOf4.set(rget['item10']['title'])
+                self.pic4.set(rget['item10']['image_url'])
                 self.priceOf5.set("")
                 self.titleOf5.set("")
                 self.pic5.set("")
                 self.priceOf6.set("")
                 self.titleOf6.set("")
                 self.pic6.set("")
-            if(int(n)==11):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
-                self.priceOf4.set(rget['item4']['price_no_shipping'])
-                self.titleOf4.set(rget['item4']['title'])
-                self.pic4.set(rget['item4']['image_url'])
-                self.priceOf5.set(rget['item5']['price_no_shipping'])
-                self.titleOf5.set(rget['item5']['title'])
-                self.pic5.set(rget['item5']['image_url'])
+            if(int(p)==11):
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
+                self.priceOf4.set(rget['item10']['price_no_shipping'])
+                self.titleOf4.set(rget['item10']['title'])
+                self.pic4.set(rget['item10']['image_url'])
+                self.priceOf5.set(rget['item11']['price_no_shipping'])
+                self.titleOf5.set(rget['item11']['title'])
+                self.pic5.set(rget['item11']['image_url'])
                 self.priceOf6.set("")
                 self.titleOf6.set("")
                 self.pic6.set("")
-            if(int(n)>=12):
-                self.priceOf1.set(rget['item1']['price_no_shipping'])
-                self.titleOf1.set(rget['item1']['title'])
-                self.pic1.set(rget['item1']['image_url'])
-                self.priceOf2.set(rget['item2']['price_no_shipping'])
-                self.titleOf2.set(rget['item2']['title'])
-                self.pic2.set(rget['item2']['image_url'])
-                self.priceOf3.set(rget['item3']['price_no_shipping'])
-                self.titleOf3.set(rget['item3']['title'])
-                self.pic3.set(rget['item3']['image_url'])
-                self.priceOf4.set(rget['item4']['price_no_shipping'])
-                self.titleOf4.set(rget['item4']['title'])
-                self.pic4.set(rget['item4']['image_url'])
-                self.priceOf5.set(rget['item5']['price_no_shipping'])
-                self.titleOf5.set(rget['item5']['title'])
-                self.pic5.set(rget['item5']['image_url'])
-                self.priceOf6.set(rget['item6']['price_no_shipping'])
-                self.titleOf6.set(rget['item6']['title'])
-                self.pic6.set(rget['item6']['image_url'])
+            if(int(p)>=12):
+                self.priceOf1.set(rget['item7']['price_no_shipping'])
+                self.titleOf1.set(rget['item7']['title'])
+                self.pic1.set(rget['item7']['image_url'])
+                self.priceOf2.set(rget['item8']['price_no_shipping'])
+                self.titleOf2.set(rget['item8']['title'])
+                self.pic2.set(rget['item8']['image_url'])
+                self.priceOf3.set(rget['item9']['price_no_shipping'])
+                self.titleOf3.set(rget['item9']['title'])
+                self.pic3.set(rget['item9']['image_url'])
+                self.priceOf4.set(rget['item10']['price_no_shipping'])
+                self.titleOf4.set(rget['item10']['title'])
+                self.pic4.set(rget['item10']['image_url'])
+                self.priceOf5.set(rget['item11']['price_no_shipping'])
+                self.titleOf5.set(rget['item11']['title'])
+                self.pic5.set(rget['item11']['image_url'])
+                self.priceOf6.set(rget['item12']['price_no_shipping'])
+                self.titleOf6.set(rget['item12']['title'])
+                self.pic6.set(rget['item12']['image_url'])
     def deleteFromWList(self):
         global n
         num_lines = sum(1 for line in open('/Users/Sean/Desktop/CSC-380-master/watch_list.txt'))
@@ -1074,58 +1071,48 @@ class Page2(Page):
         self.var6.set(0)
 
     def addToWList(self):
-        sleep(1) # Need this to slow the changes down
         global pageNum
         global n
         item = self.mEntry.get()
         root.update_idletasks()
-        try:
-            json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=6&page_number="+str(pageNum)).json()
-            print(json_data)
-            firstPrice = json_data['0']['price']
-            firstTitle = json_data['0']['title']
-            firstID = json_data['0']['itemId']
-            firstShipping = json_data['0']['shippingCost']['shipToLocations']
-            firstCountry = json_data['0']['country']
-            firstImage = json_data['0']['image_url']
-            #firstList = json_data['0']['list_type']
-            secondPrice = json_data['1']['price']
-            secondTitle = json_data['1']['title']
-            secondID = json_data['1']['itemId']
-            secondShipping = json_data['1']['shippingCost']['shipToLocations']
-            secondCountry = json_data['1']['country']
-            secondImage = json_data['1']['image_url']
-            #secondList = json_data['1']['list_type']
-            thirdPrice = json_data['2']['price']
-            thirdTitle = json_data['2']['title']
-            thirdID = json_data['2']['itemId']
-            thirdShipping = json_data['2']['shippingCost']['shipToLocations']
-            thirdCountry = json_data['2']['country']
-            thirdImage = json_data['2']['image_url']
-            #thirdList = json_data['2']['list_type']
-            fourthPrice = json_data['3']['price']
-            fourthTitle = json_data['3']['title']
-            fourthID = json_data['3']['itemId']
-            fourthShipping = json_data['3']['shippingCost']['shipToLocations']
-            fourthCountry = json_data['3']['country']
-            fourthImage = json_data['3']['image_url']
-            #fourthList = json_data['3']['list_type']
-            fifthPrice = json_data['4']['price']
-            fifthTitle = json_data['4']['title']
-            fifthID = json_data['4']['itemId']
-            fifthShipping = json_data['4']['shippingCost']['shipToLocations']
-            fifthCountry = json_data['4']['country']
-            fifthImage = json_data['4']['image_url']
-            #fifthList = json_data['4']['list_type']
-            sixthPrice = json_data['5']['price']
-            sixthTitle = json_data['5']['title']
-            sixthID = json_data['5']['itemId']
-            sixthShipping = json_data['5']['shippingCost']['shipToLocations']
-            sixthCountry = json_data['5']['country']
-            sixthImage = json_data['5']['image_url']
-            #sixthList = json_data['5']['list_type']
-        except:
-            print("Connection refused")
+        json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=25&page_number="+str(pageNum)).json()
+        print(json_data)
+        firstPrice = json_data['0']['price']
+        firstTitle = json_data['0']['title']
+        firstID = json_data['0']['itemId']
+        firstShipping = json_data['0']['shippingCost']['shipToLocations']
+        firstCountry = json_data['0']['country']
+        firstImage = json_data['0']['image_url']
+        secondPrice = json_data['1']['price']
+        secondTitle = json_data['1']['title']
+        secondID = json_data['1']['itemId']
+        secondShipping = json_data['1']['shippingCost']['shipToLocations']
+        secondCountry = json_data['1']['country']
+        secondImage = json_data['1']['image_url']
+        thirdPrice = json_data['2']['price']
+        thirdTitle = json_data['2']['title']
+        thirdID = json_data['2']['itemId']
+        thirdShipping = json_data['2']['shippingCost']['shipToLocations']
+        thirdCountry = json_data['2']['country']
+        thirdImage = json_data['2']['image_url']
+        fourthPrice = json_data['3']['price']
+        fourthTitle = json_data['3']['title']
+        fourthID = json_data['3']['itemId']
+        fourthShipping = json_data['3']['shippingCost']['shipToLocations']
+        fourthCountry = json_data['3']['country']
+        fourthImage = json_data['3']['image_url']
+        fifthPrice = json_data['4']['price']
+        fifthTitle = json_data['4']['title']
+        fifthID = json_data['4']['itemId']
+        fifthShipping = json_data['4']['shippingCost']['shipToLocations']
+        fifthCountry = json_data['4']['country']
+        fifthImage = json_data['4']['image_url']
+        sixthPrice = json_data['5']['price']
+        sixthTitle = json_data['5']['title']
+        sixthID = json_data['5']['itemId']
+        sixthShipping = json_data['5']['shippingCost']['shipToLocations']
+        sixthCountry = json_data['5']['country']
+        sixthImage = json_data['5']['image_url']
 
         if(self.var1.get()):
             data1 = {
@@ -1304,11 +1291,11 @@ class Page2(Page):
         self.var4.set(0)
         self.var5.set(0)
         self.var6.set(0)
-        sleep(1) # Need this to slow the changes down
         global pageNum
+        print(pageNum)
         item = self.mEntry.get()
         root.update_idletasks()
-        json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=6&page_number="+str(pageNum)).json()
+        json_data = requests.get("http://127.0.0.1:5000/search?search_param="+item+"&items_per_page=25&page_number="+str(pageNum)).json()
         print(json_data)
         firstPrice = json_data['0']['price']
         firstTitle = json_data['0']['title']
@@ -1630,7 +1617,7 @@ class Page2(Page):
         showPicture6.bind("<Button-1>", self.callPic)
         canvas.create_window(300, 1350, window=showPicture6)
         #Update list
-        getNum = Button(canvas, text="Update List", command=self.addToWList)
+        getNum = Button(canvas, text="Add To List", command=self.addToWList)
         canvas.create_window(200, 1500, window=getNum)
         #Scroll bar
         scrollbar = Scrollbar(self)
