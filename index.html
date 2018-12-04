@@ -8,9 +8,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <!DOCTYPE html>
-<html lang="en">
-<head>
   <title>Hadrian's Search</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +15,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-  <script src="test.js"></script>
+  <link href="https://unpkg.com/tabulator-tables@4.1.2/dist/css/tabulator.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.1.2/dist/js/tabulator.min.js"></script>
   <style>
   .fakeimg {
       height: 200px;
@@ -30,7 +28,6 @@
   }
   </style>
 </head>
-<body>
 <div class="jumbotron text-center" style="margin-bottom:0">
   <h1>Hadrian's Search</h1>
   <p>The personalized eBay searching tool</p> 
@@ -44,10 +41,10 @@
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">Watch List</a>
+        <a class="nav-link" href="#" onclick="watchListTab()">Watch List</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Ignore List</a>
+        <a class="nav-link" href="#" onclick="ignoreListTab()">Ignore List</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Help</a>
@@ -57,22 +54,86 @@
       </li>    
     </ul>
   </div>
-  <div class="search-container">
-    <form id="search" action="http://hadrians-search.tk/search" method="get">
-      <input type="text" name="search_param">
-      <input type="hidden" name="items_per_page" value="10">
-      <input type="hidden" name="page_number" value="10">
-      <button type="submit"><i class="fa fa-search"></i>Submit</button>
-    </form>
-  </div>
-  
+<form id="search" onsubmit="return false;">
+  <input type="text" id="search-param">
+  <input type="submit" onclick="getJson()">
+</form>
 </nav>
+<div id="json-table"></div>
+    <!--JavaScript -->
+    <script>
 
-</body>
-</html>
- 
+var tabUrl = "";
+var watchListArray = [];
+var ignoreListArray = [];
 
-    <!-- Optional JavaScript -->
+function getJson() {
+    var searchParam = document.getElementById("search-param").value;
+    var tabUrl = "http://hadrians-search.tk/search?search_param=" + searchParam + "&items_per_page=20&page_number=20";
+
+
+var table = new Tabulator("#json-table", {
+    layout:"fitDataFill",
+    ajaxURL:tabUrl,
+    ajaxResponse:function(url, params, response){
+	return Object.values(response);
+    },
+    columns:
+        [{title:"Title", field:"title", align:"center"},
+        {title:"Price", field:"price", align:"center"},
+        {title:"Shipping Cost", field:"shippingCost.shippingServiceCost.value", align:"center"},
+	{title:"Watch List", align:"center", cellClick:function(e, cell){
+	    var data = cell.getData();
+	    watchListArray.push(data);
+	    localStorage.setItem("watchList", JSON.stringify(watchListArray));
+    },},
+	{title:"Ignore List", align:"center", cellClick:function(e, cell){
+            var data = cell.getData();
+            ignoreListArray.push(data);
+            localStorage.setItem("ignoreList", JSON.stringify(ignoreListArray));
+    },
+	},
+	{title:"Image", align:"center"},
+    ],
+});
+}
+
+function watchListTab() {
+
+    watchListArray = JSON.parse(localStorage.getItem("watchList"));
+
+    var watchList = new Tabulator("#json-table", {
+	data:watchListArray,
+	layout:"fitDataFill",
+	columns:
+        [{title:"Title", field:"title", align:"center"},
+        {title:"Title", field:"price", align:"center"},
+        {title:"Shipping Cost", field:"shippingCost.shippingServiceCost.value", align:"center"},
+        {title:"Watch List", align:"center"},
+        {title:"Ignore List", align:"center"},
+        {title:"Image", align:"center"},
+        ],
+    });
+}
+
+function ignoreListTab() {
+
+    ignoreListArray = JSON.parse(localStorage.getItem("ignoreList"));
+
+    var watchList = new Tabulator("#json-table", {
+	data:ignoreListArray,
+        layout:"fitDataFill",
+        columns:
+        [{title:"Title", field:"title", align:"center"},
+        {title:"Price", field:"price", align:"center"},
+        {title:"Shipping Cost", field:"shippingCost.shippingServiceCost.value", align:"center"},
+        {title:"Watch List", align:"center"},
+        {title:"Ignore List", align:"center"},
+        {title:"Image", align:"center"},
+        ],
+    });
+}
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
