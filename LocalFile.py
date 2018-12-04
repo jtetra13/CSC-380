@@ -10,9 +10,9 @@ class LocalFile:
             return False
  
         f = open(file_name, 'a+')
-        index = 5
+        index = 6
         for key in input_dict:
-            if index % 5 == 0:
+            if index % 6 == 0:
                 f.write('>' + key + ',' + input_dict[key] + '\n')
                 index += 1
             else:
@@ -32,7 +32,7 @@ class LocalFile:
 
             for line in f:
                 if "itemId," + itemId in line:
-                    for _ in range(6):
+                    for _ in range(7):
                         next(f, None)
                 else:
                     print(line.strip())
@@ -65,7 +65,7 @@ class LocalFile:
                     inner_dict[list_input[0]] = list_input[1]
                     line_counter = line_counter + 1
 
-                if line_counter % 7 == 0 and bool(inner_dict):
+                if line_counter % 8 == 0 and bool(inner_dict):
                     watch_list[itemName] = inner_dict 
                     inner_dict = {}
                     item_counter = item_counter + 1

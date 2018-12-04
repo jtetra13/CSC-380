@@ -3,6 +3,16 @@ from flask_restful import Resource, Api, reqparse
 from ebaysdk.finding import Connection as Finding
 import WatchList, IgnoreList
 
+#TO DO List for this project
+    #switch the backend to an actual sqlite database for filtering etc
+    #continue on the custom error interepration
+    #refactor into classes for the parsers ,etc
+    #create an official wiki/documentation
+    #create basic tests for backend
+    #maybe figure out how to create the custom search responses
+    #merge with crypto project
+
+
 app = Flask(__name__)
 api = Api(app)
 watch_list = WatchList.WatchList()
