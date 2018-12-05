@@ -30,6 +30,7 @@ gui_parser.add_argument('itemId', required=True)
 gui_parser.add_argument('country', required=True)
 gui_parser.add_argument('shipping', required=True)
 gui_parser.add_argument('image_url', required=True)
+gui_parser.add_argument('url',required=True)
 gui_parser.add_argument('list_type', type=int)
 
 parser.add_argument('search_param', action='append', required=True)  # user string
@@ -86,7 +87,7 @@ def parse_params_gui_query():
     nikta = dict()
     ret_args = gui_parser.parse_args()
     nikta['itemId'] = ret_args['itemId']
-    nikta['url']=ret_args['viewItemURL']
+    nikta['url']=ret_args['url']
     nikta['title'] = ret_args['title']
     nikta['price'] = dict([('price_no_shipping', ret_args['price']), ('price_shipping', ret_args['shipping'])])
     nikta['country'] = ret_args['country']
