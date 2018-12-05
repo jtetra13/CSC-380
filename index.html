@@ -34,7 +34,7 @@
 </div>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <a class="navbar-brand" href="#">Home</a>
+  <a class="navbar-brand" href="#">Hadrian's Search</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -46,12 +46,6 @@
       <li class="nav-item">
         <a class="nav-link" href="#" onclick="ignoreListTab()">Ignore List</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Help</a>
-      </li>    
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>    
     </ul>
   </div>
 <form id="search" onsubmit="return false;">
@@ -71,10 +65,22 @@ function getJson() {
     var searchParam = document.getElementById("search-param").value;
     var tabUrl = "http://hadrians-search.tk/search?search_param=" + searchParam + "&items_per_page=20&page_number=20";
 
+function customFilter(data, filterParams){
+    //data - the data for the row being filtered
+    //filterParams - params object passed to the filter
+
+    //check for matches
+    var matches = ignoreListArray.filter(function(element){
+        return element.id == data.id
+    });
+
+    return !matches.length; //allow row if it does not match any row in the ignore list
+}
 
 var table = new Tabulator("#json-table", {
     layout:"fitDataFill",
     ajaxURL:tabUrl,
+    initialFilter:customFilter,
     ajaxResponse:function(url, params, response){
 	return Object.values(response);
     },
@@ -93,9 +99,10 @@ var table = new Tabulator("#json-table", {
             localStorage.setItem("ignoreList", JSON.stringify(ignoreListArray));
     },
 	},
-	{title:"Image", align:"center"},
     ],
 });
+
+table.setFilter(customFilter);
 }
 
 function watchListTab() {
@@ -109,9 +116,11 @@ function watchListTab() {
         [{title:"Title", field:"title", align:"center"},
         {title:"Title", field:"price", align:"center"},
         {title:"Shipping Cost", field:"shippingCost.shippingServiceCost.value", align:"center"},
-        {title:"Watch List", align:"center"},
+        {title:"Watch List", align:"center", cellClick:function(e, cell){
+            cell.getRow().delete();
+    	},
+    },
         {title:"Ignore List", align:"center"},
-        {title:"Image", align:"center"},
         ],
     });
 }
@@ -120,7 +129,7 @@ function ignoreListTab() {
 
     ignoreListArray = JSON.parse(localStorage.getItem("ignoreList"));
 
-    var watchList = new Tabulator("#json-table", {
+    var ignoreList = new Tabulator("#json-table", {
 	data:ignoreListArray,
         layout:"fitDataFill",
         columns:
@@ -128,8 +137,13 @@ function ignoreListTab() {
         {title:"Price", field:"price", align:"center"},
         {title:"Shipping Cost", field:"shippingCost.shippingServiceCost.value", align:"center"},
         {title:"Watch List", align:"center"},
-        {title:"Ignore List", align:"center"},
-        {title:"Image", align:"center"},
+	{title:"Ignore List", align:"center", cellClick:function(e, cell){
+	    localStorage.removeItem(cell.getRow());
+	    cell.getRow().delete();
+	    localStorage.setItem("ignoreList", JSON.stringify(ignoreListArray));
+	    ignoreListArray = JSON.parse(localStorage.getItem("ignoreList"));
+	},
+    },
         ],
     });
 }
